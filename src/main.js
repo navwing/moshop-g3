@@ -4,14 +4,14 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {
     faAngleDown, faChartSimple, faUserGroup, faComment, faVideo, faUsers, faClipboardList
-    , faArrowUpFromBracket
+    , faArrowUpFromBracket, faCheck, faUserPlus, faUser, faBox, faCircleInfo, faTag, faArrowRightFromBracket
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
 
 library.add(faAngleDown, faChartSimple, faUserGroup, faComment, faVideo, faUsers, faClipboardList,
-    faArrowUpFromBracket)
+    faArrowUpFromBracket,faCheck,faUserPlus,faUser,faBox,faCircleInfo,faTag,faArrowRightFromBracket)
 
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
