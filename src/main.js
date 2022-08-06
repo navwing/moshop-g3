@@ -9,8 +9,7 @@ import {
     faComment,
     faVideo,
     faUsers,
-    faClipboardList
-    ,
+    faClipboardList,
     faArrowUpFromBracket,
     faCheck,
     faUserPlus,
@@ -20,14 +19,15 @@ import {
     faTag,
     faArrowRightFromBracket,
     faGear,
-    faPlus
+    faPlus, faArrowDown, faArrowUp
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
 
 library.add(faAngleDown, faChartSimple, faUserGroup, faComment, faVideo, faUsers, faClipboardList,
-    faArrowUpFromBracket, faCheck, faUserPlus, faUser, faBox, faCircleInfo, faTag, faArrowRightFromBracket, faGear, faPlus)
+    faArrowUpFromBracket, faCheck, faUserPlus, faUser, faBox, faCircleInfo, faTag, faArrowRightFromBracket, faGear, faPlus
+,faArrowDown,faArrowUp)
 
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)

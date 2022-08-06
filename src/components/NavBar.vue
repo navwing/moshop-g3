@@ -118,7 +118,7 @@
           </a>
         </li>
         <li style="background-color: #da4838">
-          <a href="#" class="navlink">
+          <a href="#" class=" createPackage">
             <font-awesome-icon icon="fa-solid fa-arrow-up-from-bracket" class="text-2xl"/>
             <span>Đăng Đơn</span>
           </a>
@@ -182,14 +182,24 @@ ul li {
   font-size: 17px;
 }
 
-.navlink {
+.navlink ,.createPackage {
   height: 48px;
   display: flex;
   align-items: center;
   padding: 0 20px;
 }
+.navlink:hover{
+  background-color: white;
+  color: #069255;
+}
+.navlink  span {
+  line-height: 1;
+  margin-top: 4px;
+  margin-left: 8px;
+  font-weight: 700;
 
-.navlink span {
+}
+.createPackage span{
   line-height: 1;
   margin-top: 4px;
   margin-left: 8px;
