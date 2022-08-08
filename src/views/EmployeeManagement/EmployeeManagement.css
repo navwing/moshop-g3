@@ -125,7 +125,9 @@ th{
     color: white;
     font-size: 14px
 }
-
+.btn-utility:hover {
+    background-color: #067b50;
+}
 .btn-utility span {
     margin-left: 10px;
 }

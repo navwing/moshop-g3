@@ -1,4 +1,6 @@
 <template>
+  <KPIsEmployee v-show="openKpiModal" @closeModal="closeModal"/>
+  <SettingFilter v-show="openSettingFilter" @closeFilter="closeSettingFilter"/>
   <div class="container">
     <div class="row page__header flex">
       <div class="left-content">
@@ -20,12 +22,12 @@
           <button class="filter-btn active">Hôm nay</button>
           <button class="filter-btn ">Tuần này</button>
           <button class="filter-btn ">Tháng này</button>
-          <button class="filter-btn ">Tùy chọn</button>
+          <button class="filter-btn " @click="openSettingFilter=!openSettingFilter">Tùy chọn</button>
         </div>
       </div>
       <div class="right-content">
         <div class="action flex items-end flex-wrap  flex-col">
-          <button class="btn-utility">
+          <button class="btn-utility" @click="openKpiModal=!openKpiModal">
             <font-awesome-icon icon="fa-solid fa-gear"/>
             <span>KPIs nhân viên</span>
           </button>
@@ -187,21 +189,34 @@
         </tbody>
       </table>
     </div>
-
   </div>
 </template>
 
 <script>
 import Employee from "../../components/Employee/Employee.vue";
-
+import KPIsEmployee from "../../components/KPIsEmployee/KPIsEmployee.vue";
+import SettingFilter from "../../components/SettingFilter/SettingFilter.vue";
 export default {
   name: "EmployeeManagement",
   components: {
-    Employee
+    Employee,
+    KPIsEmployee,
+    SettingFilter
   },
   data() {
-    return {};
+    return {
+      openKpiModal: false,
+      openSettingFilter: false,
+    };
   },
+  methods:{
+    closeModal(){
+      this.openKpiModal = false;
+    },
+    closeSettingFilter(){
+      this.openSettingFilter = false;
+    }
+  }
 }
 </script>
 
