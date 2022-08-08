@@ -1,0 +1,91 @@
+.wrapModal{
+   top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    position: fixed;
+    z-index: 10;
+    opacity: 0.5;
+}
+.kpiModal {
+    background-color: #fff;
+    position: fixed;
+    z-index: 10;
+    max-width: 500px;
+    left: 37%;
+    top: 15%;
+    opacity: 1!important;
+}
+
+.modal-content {
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 0.3rem;
+
+}
+
+.modal-header {
+    background-color: #069255;
+    text-align: center !important;
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.closeButton {
+    color: #fff;
+    font-size: 26px;
+    opacity: 1;
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+    font-weight: 700;
+}
+
+.setting-title {
+    height: 40px;
+    background: #d6d6d6;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0 40px;
+}
+
+.onlineSetting, .offlineSetting {
+    padding: 10px 40px;
+}
+
+.onlineSetting__title, .offlineSetting__title {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.onlineSetting__item, .offlineSetting__item {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.onlineSetting__item  input {
+    margin-right: 10px;
+}
+.offlineSetting__item  input {
+    margin-right: 10px;
+}
+.modal-footer{
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.75rem;
+
+}
+.saveBtn{
+    color: white;
+    min-width: 100%;
+    padding: 8px 0;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #069255;
+    border-radius: 0.25rem;
+}
+
