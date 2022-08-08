@@ -1,3 +1,4 @@
+
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'
 import {library} from '@fortawesome/fontawesome-svg-core'
@@ -19,19 +20,20 @@ import {
     faTag,
     faArrowRightFromBracket,
     faGear,
-    faPlus, faArrowDown, faArrowUp, faCalendar
+    faPlus, faArrowDown, faArrowUp, faCalendar,faUserSecret,faEye,faChevronLeft 
 } from '@fortawesome/free-solid-svg-icons'
+
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
 
 library.add(faAngleDown, faChartSimple, faUserGroup, faComment, faVideo, faUsers, faClipboardList,
     faArrowUpFromBracket, faCheck, faUserPlus, faUser, faBox, faCircleInfo, faTag, faArrowRightFromBracket, faGear, faPlus
-    , faArrowDown, faArrowUp, faCalendar)
+    , faArrowDown, faArrowUp, faCalendar,faUserSecret,faEye,faChevronLeft)
 
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(createPinia())
-app.use(router)
+// app.use(router)
 
 app.mount('#app')
