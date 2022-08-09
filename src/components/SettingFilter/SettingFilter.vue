@@ -1,6 +1,6 @@
 <template>
   <div >
-    <div class="wrapModal" @click="$emit('closeModal')"></div>
+    <div class="wrapModal" @click="$emit('closeFilter')"></div>
     <div class="filterModal">
       <div class="modal-content flex flex-col">
         <div class="modal-header flex items-start justify-between">

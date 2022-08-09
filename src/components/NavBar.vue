@@ -1,5 +1,5 @@
 <template>
-  <div class="navBar flex text-white bg-default_green">
+  <div class="navBar flex text-white bg-default_green mb-7">
     <div class="navBar__logo">
       <a href="#" class="navBar__brand ">moshop</a>
     </div>

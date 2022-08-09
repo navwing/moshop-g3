@@ -5,7 +5,7 @@
         <div class="staff-left ">
           <div class="staff-left__avatar flex justify-center">
             <img
-                src="https://cache.giaohangtietkiem.vn/image/show/201d61e0-4025-4202-a9e4-79f669f19908/ccfa8277-505c-444b-affd-57b9ce5112f9.jpg"
+                :src=staff.avatar
                 alt="">
           </div>
           <div class="staff__status">
@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="staff-center pl-2">
-          <div class="staff__name text-left">ExNope</div>
+          <div class="staff__name text-left">{{staff.fullname}}</div>
           <ul class="staff-center__screen text-left">
             <li>Đơn hàng</li>
             <li>Chats vận hành</li>
@@ -56,16 +56,16 @@
       </div>
     </div>
   </td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
-  <td class="border border-slate">0</td>
+  <td class="border border-slate">{{staff.work_result.customer}}</td>
+  <td class="border border-slate">{{staff.work_result.customer_has_phone}}</td>
+  <td class="border border-slate">{{staff.work_result.customer_deal}}</td>
+  <td class="border border-slate">{{staff.work_result.order_success}}</td>
+  <td class="border border-slate">{{staff.work_result.rate_order}}%</td>
+  <td class="border border-slate">{{staff.work_result.call_log}}</td>
+  <td class="border border-slate">{{staff.work_result.order_return}}</td>
+  <td class="border border-slate">{{staff.work_result.revenue}}đ</td>
+  <td class="border border-slate">{{staff.work_result.fee}}đ</td>
+  <td class="border border-slate">{{staff.work_result.time_reply}}s</td>
 </template>
 
 <script>
@@ -74,10 +74,25 @@ export default {
   data() {
     return {
       openDropDown: false,
-      employeeStatus: 'active',
+
     };
   },
+  props: {
+    staff: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
+    employeeStatus() {
+      if(this.staff.active === 1) {
+        return 'active';
+      } else if(this.staff.active === 2) {
+        return 'temporaryBreak';
+      } else if(this.staff.active === 0) {
+        return 'retired';
+      }
+    },
     employeeStatusText() {
       if (this.employeeStatus === 'active') {
         return 'Đang làm việc';
@@ -94,6 +109,9 @@ export default {
       this.employeeStatus = status;
     },
   },
+  mounted() {
+    console.log(this.staff)
+  }
 }
 </script>
 

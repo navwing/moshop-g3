@@ -1,4 +1,5 @@
 <template>
+  <NavBar/>
   <KPIsEmployee v-show="openKpiModal" @closeModal="closeModal"/>
   <SettingFilter v-show="openSettingFilter" @closeFilter="closeSettingFilter"/>
   <div class="container">
@@ -183,8 +184,8 @@
         </tr>
         </thead>
         <tbody class="text-center">
-        <tr v-for="i in 5">
-          <Employee/>
+        <tr v-for="staff in listStaff">
+          <Employee :staff="staff"/>
         </tr>
         </tbody>
       </table>
@@ -196,12 +197,18 @@
 import Employee from "../../components/Employee/Employee.vue";
 import KPIsEmployee from "../../components/KPIsEmployee/KPIsEmployee.vue";
 import SettingFilter from "../../components/SettingFilter/SettingFilter.vue";
+import NavBar from "../../components/NavBar.vue";
+import {useStaffStore} from "../../stores/StaffStore";
+import {mapActions,mapState} from "pinia";
+
 export default {
   name: "EmployeeManagement",
   components: {
     Employee,
     KPIsEmployee,
-    SettingFilter
+    SettingFilter,
+    NavBar
+
   },
   data() {
     return {
@@ -209,13 +216,20 @@ export default {
       openSettingFilter: false,
     };
   },
-  methods:{
-    closeModal(){
+  computed: {
+    ...mapState(useStaffStore, ['listStaff'])
+  },
+  methods: {
+    ...mapActions(useStaffStore, ["getListStaff"]),
+    closeModal() {
       this.openKpiModal = false;
     },
-    closeSettingFilter(){
+    closeSettingFilter() {
       this.openSettingFilter = false;
     }
+  },
+  mounted() {
+    this.getListStaff();
   }
 }
 </script>
