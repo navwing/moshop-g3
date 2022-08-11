@@ -4,16 +4,16 @@
     <div class="filterModal">
       <div class="modal-content flex flex-col">
         <div class="modal-header flex items-start justify-between">
-          <h5 class="m-auto">Tùy chọn hiển thị</h5>
+          <h5 class="m-auto">Tùy chọn hiển thị {{startDay}} {{endDay}}</h5>
         </div>
         <div class="modal-body">
           <div class="date-picker text-center p-4">
             <div class="date-picker__wrap ">
-              <input type="date" placeholder="Chọn ngày bắt đầu" >
+              <input type="date" placeholder="Chọn ngày bắt đầu" v-model="startDay" >
               <font-awesome-icon icon="fa-regular fa-calendar" />
             </div>
             <div class="date-picker__wrap">
-              <input type="date" placeholder="Chọn ngày bắt đầu" >
+              <input type="date" placeholder="Chọn ngày bắt đầu" v-model="endDay" >
               <font-awesome-icon icon="fa-regular fa-calendar" />
             </div>
           </div>
@@ -29,7 +29,13 @@
 
 <script>
 export default {
-  name: "SettingFilter"
+  name: "SettingFilter",
+  data() {
+    return {
+      startDay: "",
+      endDay: "",
+    };
+  },
 }
 </script>
 

@@ -28,6 +28,7 @@ export default {
           username: this.username ,
           password: this.password
         });
+        console.log(response);
         if(response.status === 200) {
           localStorage.setItem('accessToken', response.data.data.access_token);
          this.$router.go('/home');
