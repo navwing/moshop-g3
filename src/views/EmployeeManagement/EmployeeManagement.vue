@@ -1,12 +1,12 @@
 <template>
-  <NavBar/>
   <KPIsEmployee v-show="openKpiModal" @closeModal="closeModal" :KpiOnl="KpiOnl" :KpiOff="KpiOff"/>
   <SettingFilter v-show="openSettingFilter" @closeFilter="closeSettingFilter"/>
+  <NavBar />
   <div class="container">
     <div class="row page__header flex">
       <div class="left-content">
         <div class="info flex items-center">
-          <h2 class="info-title">Quản lý nhân viên</h2>
+          <h2 class="info-title" >Quản lý nhân viên </h2>
           <div class="live">
             <div class="signal flex items-center justify-center relative">
               <div class="dot-signal"></div>
@@ -206,6 +206,7 @@
 </template>
 
 <script>
+import {startOfDay, endOfDay, format, startOfWeek, endOfWeek, startOfMonth, endOfMonth} from "date-fns";
 import Employee from "../../components/Employee/Employee.vue";
 import KPIsEmployee from "../../components/KPIsEmployee/KPIsEmployee.vue";
 import SettingFilter from "../../components/SettingFilter/SettingFilter.vue";
@@ -213,7 +214,6 @@ import NavBar from "../../components/NavBar.vue";
 import {useStaffStore} from "../../stores/StaffStore";
 import {mapActions, mapState} from "pinia";
 import axios from "axios";
-import {startOfDay, endOfDay, format, startOfWeek, endOfWeek, startOfMonth, endOfMonth} from "date-fns";
 
 export default {
   name: "EmployeeManagement",
@@ -226,12 +226,13 @@ export default {
   },
   data() {
     return {
+      test1: '',
       openKpiModal: false,
       openSettingFilter: false,
       KpiOnl: "",
       KpiOff: "",
       renderType: 'today',
-      startDay: format(startOfWeek(new Date()), 'yyyy-MM-dd'),
+      startDay: format(startOfDay(new Date()), 'yyyy-MM-dd'),
       endDay: format(endOfDay(new Date()), 'yyyy-MM-dd'),
     };
   },
@@ -241,30 +242,38 @@ export default {
 
   },
   methods: {
+    ...mapActions(useStaffStore, ["getListStaff"]),
+    ...mapActions(useStaffStore, ["changeDateGet"]),
     changeRenderDate(method) {
       if (method === 'today') {
         this.renderType = method;
         this.startDay = format(startOfDay(new Date()), 'yyyy-MM-dd');
         this.endDay = format(endOfDay(new Date()), 'yyyy-MM-dd');
+        this.changeDateGet(this.startDay, this.endDay);
+        this.getListStaff();
+
       }
       if (method === "thisWeek") {
         this.renderType = method;
         this.startDay = format(startOfWeek(new Date()), 'yyyy-MM-dd');
         this.endDay = format(endOfWeek(new Date()), 'yyyy-MM-dd');
+        this.changeDateGet(this.startDay, this.endDay);
+        this.getListStaff();
+
       }
       if (method === "thisMonth") {
         this.renderType = method;
         this.startDay = format(startOfMonth(new Date()), 'yyyy-MM-dd');
         this.endDay = format(endOfMonth(new Date()), 'yyyy-MM-dd');
-      }
-      if(method === "custom"){
-        this.renderType = method;
-        this.openSettingFilter=!this.openSettingFilter;
-      }
-      this.getListStaff(this.startDay, this.endDay);
-    },
-    ...mapActions(useStaffStore, ["getListStaff"]),
+        this.changeDateGet(this.startDay, this.endDay);
+        this.getListStaff();
 
+      }
+      if (method === "custom") {
+        this.renderType = method;
+        this.openSettingFilter = !this.openSettingFilter;
+      }
+    },
     closeModal() {
       this.openKpiModal = false;
     },
@@ -284,12 +293,13 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    }
+    },
+
   }
   ,
   mounted() {
-    // this.getListStaff(this.startDay, this.endDay);
-    setInterval(this.getListStaff(this.startDay, this.endDay), 10000);
+    this.changeDateGet(this.startDay, this.endDay);
+    setInterval(this.getListStaff(), 300000);
   }
 }
 </script>

@@ -64,11 +64,9 @@ import axios from "axios";
 export default {
   name: "KPIsEmployee",
   data() {
-    return {
-
-    };
+    return {};
   },
-  props:['KpiOff','KpiOnl'],
+  props: ['KpiOff', 'KpiOnl'],
   methods: {
     async updateKPIs() {
       try {
@@ -87,8 +85,13 @@ export default {
           }
         });
 
-      }
-      catch (err) {
+        if (resOnl.data.success && resOff.data.success) {
+          this.$toast.success(resOnl.data.message);
+        }
+        else{
+          this.$toast.error("Đã có lỗi xảy ra");
+        }
+      } catch (err) {
         console.log(err);
       }
     },

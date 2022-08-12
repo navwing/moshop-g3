@@ -67,7 +67,7 @@
 
 <script>
 import {useStaffStore} from "../../stores/StaffStore";
-import {mapActions} from "pinia";
+import {mapActions,mapState} from "pinia";
 
 export default {
   name: "Employee",
@@ -111,12 +111,14 @@ export default {
         return 'Đã nghỉ việc';
       }
     },
+    ...mapState(useStaffStore,['toastMessage'])
   },
   methods: {
     ...mapActions(useStaffStore, {changeStatus: 'updateStaffStatus'}),
-    changeEmployeeStatus(status) {
+    async changeEmployeeStatus(status) {
       this.openDropDown = !this.openDropDown;
-      this.changeStatus(this.staff.id, status);
+      await this.changeStatus(this.staff.id, status);
+      this.$toast.success(this.toastMessage);
     },
   },
 
