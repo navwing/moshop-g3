@@ -16,7 +16,9 @@
               NV online
             </div>
             <div class="onlineSetting__item">
-              <input type="radio" value="all" v-model="KpiOnl">
+              <input type="radio" value="all" v-model="KpiOnl"
+                     class=" checked:bg-default_green cursor-pointer "
+              style="color: #28a745 !important;">
               <span>Nhận tất cả hội thoại</span>
             </div>
             <div class="onlineSetting__item">
@@ -87,8 +89,7 @@ export default {
 
         if (resOnl.data.success && resOff.data.success) {
           this.$toast.success(resOnl.data.message);
-        }
-        else{
+        } else {
           this.$toast.error("Đã có lỗi xảy ra");
         }
       } catch (err) {

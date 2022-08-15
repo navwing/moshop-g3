@@ -1,37 +1,45 @@
 import {defineStore} from "pinia";
 import axios from "axios";
+import {format, startOfDay} from "date-fns";
 
-const token = localStorage.getItem('accessToken');
 export const useStaffStore = defineStore("Staff", {
     state: () => {
         return {
+            listStaffBackUp: [],
             listStaff: [],
-            updateTime: {
-                hour: 0,
-                minute: 0,
-            },
+            updateTime:"",
             startDateGet: "",
             endDateGet: "",
-            toastMessage: "",
+            toastMessage: {
+                type: "",
+                message: ""
+            },
         }
     },
     actions: {
+        changeToastMessage( type,message) {
+            this.toastMessage.message=message;
+            this.toastMessage.type=type;
+        },
+        getToken() {
+          return  localStorage.getItem('accessToken');
+        },
         changeDateGet(startDay, endDay) {
             this.startDateGet = startDay;
             this.endDateGet = endDay;
         },
         async getListStaff() {
-            const d = new Date();
-            this.updateTime.hour = d.getHours();
-            this.updateTime.minute = d.getMinutes();
+            this.updateTime=format(new Date, 'HH:mm');
+           this.getToken()
             const res = await axios.get(`https://x.ghtk.vn/api/v2/staff?start_date=${this.startDateGet}&end_date=${this.endDateGet}`,
                 {
                     headers: {
-                        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IiJ9.eyJ0b2tlbiI6IjNkZDU5ZWE5MDgyYWQ5ODYyYWVmYTczYTE0OTE2ZDJlN2JmN2YxYjdhZWRiMmNlZGQxMThkZDg5YzQ3ODg3MmQiLCJleHBpcmVkX2F0IjoiMjAyMS0wOC0xOVQwNTozNzozOC41MTA0MzBaIiwibW9fdGVsIjoiODQzNTYyNjIxMjEiLCJtb19yb2xlIjoiYWRtaW4iLCJtb191c2VybmFtZSI6ImhuY3A3QGdtYWlsLmNvbSJ9.M7U2RSNivrc0wFDhmXiOJgvhj2oH6AGNVNGxJ1OxDvA'
+                        'authorization': 'Bearer ' + this.getToken(),
                     }
                 }
             )
             this.listStaff = res.data.data;
+           this.listStaffBackUp = res.data.data;
         },
         async updateStaffStatus(id, status) {
             try {
@@ -40,17 +48,16 @@ export const useStaffStore = defineStore("Staff", {
                     status: status
                 }, {
                     headers: {
-                        'authorization': `Bearer ${token}`,
+                        'authorization': 'Bearer ' + this.getToken(),
                     },
                 })
-                this.toastMessage = res.data.message;
+                this.changeToastMessage("success", res.data.message)
+
                     this.getListStaff();
 
             } catch (e) {
-                this.toastMessage = "Có lỗi xảy ra";
+                this.changeToastMessage("error","Có lỗi xảy ra")
             }
-
-
         },
 
     }

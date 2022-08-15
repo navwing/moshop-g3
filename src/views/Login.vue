@@ -22,20 +22,18 @@ export default {
       this.isShow = !this.isShow;
     },
 
-    async login(){
+    async login() {
       try {
         const response = await axios.post('https://x.ghtk.vn/api/fulfilment/auth/login', {
-          username: this.username ,
+          username: this.username,
           password: this.password
         });
-        console.log(response);
-        if(response.status === 200) {
+        if (response.status === 200) {
           localStorage.setItem('accessToken', response.data.data.access_token);
-         this.$router.go('/home');
+          this.$router.push('/home');
         }
-      }
-      catch (error) {
-        this.$router.go('/login');
+      } catch (error) {
+        this.$router.push('/login');
         console.log(error);
       }
     }
@@ -264,10 +262,12 @@ input:focus {
   transform: translateX(10%);
 
 }
-.btnLogin button{
+
+.btnLogin button {
   background: #069255;
 }
-.btnLogin button:hover{
+
+.btnLogin button:hover {
   background: #02a45e;
 }
 

@@ -1,12 +1,12 @@
 <template>
   <KPIsEmployee v-show="openKpiModal" @closeModal="closeModal" :KpiOnl="KpiOnl" :KpiOff="KpiOff"/>
-  <SettingFilter v-show="openSettingFilter" @closeFilter="closeSettingFilter"/>
-  <NavBar />
+  <SettingFilter v-show="openSettingFilter" @closeFilter="closeSettingFilter" @changeMethod="changeMethod"/>
+  <NavBar/>
   <div class="container">
     <div class="row page__header flex">
       <div class="left-content">
         <div class="info flex items-center">
-          <h2 class="info-title" >Quản lý nhân viên </h2>
+          <h2 class="info-title">Quản lý nhân viên </h2>
           <div class="live">
             <div class="signal flex items-center justify-center relative">
               <div class="dot-signal"></div>
@@ -16,7 +16,7 @@
 
           </div>
           <div class="pl-4" style="font-style: italic;">
-            Live (cập nhật {{ updateTime.hour }}:{{ updateTime.minute }} )
+            Live (cập nhật {{ updateTime }} )
           </div>
         </div>
         <div class="filter">
@@ -54,7 +54,7 @@
     <div class="scroll-table">
       <table class="table-auto w-full border-collapse border border-slate">
         <thead>
-        <tr>
+        <tr ref="header">
           <th class="w-1/4 " style="font-weight: 500">Nhân viên</th>
           <th class=" font-semibold ">
             <div class="table-header">
@@ -125,7 +125,7 @@
 
           </th>
           <th class="font-semibold ">
-            <div class="table-header">
+            <div class="table-header" :value="0">
               <div class="head-title" v-tooltip="'Số đơn giao thành công của NV'">ĐH thành công</div>
               <div class="head-sort flex items-center">
                 <div class="head-sort__incr">
@@ -150,7 +150,6 @@
                 </div>
               </div>
             </div>
-
           </th>
           <th class="font-semibold ">
             <div class="table-header">
@@ -191,7 +190,6 @@
                 </div>
               </div>
             </div>
-
           </th>
         </tr>
         </thead>
@@ -234,11 +232,13 @@ export default {
       renderType: 'today',
       startDay: format(startOfDay(new Date()), 'yyyy-MM-dd'),
       endDay: format(endOfDay(new Date()), 'yyyy-MM-dd'),
+      headerArr: []
     };
   },
   computed: {
     ...mapState(useStaffStore, ['listStaff']),
     ...mapState(useStaffStore, ["updateTime"]),
+    ...mapState(useStaffStore, ["listStaffBackUp"]),
 
   },
   methods: {
@@ -270,9 +270,11 @@ export default {
 
       }
       if (method === "custom") {
-        this.renderType = method;
         this.openSettingFilter = !this.openSettingFilter;
       }
+    },
+    changeMethod() {
+      this.renderType = 'custom';
     },
     closeModal() {
       this.openKpiModal = false;
@@ -294,10 +296,71 @@ export default {
         console.log(err);
       }
     },
-
+    mapData(data) {
+      switch (data) {
+        case "KH tương tác":
+          return "customer"
+        case "KH có SĐT":
+          return "customer_has_phone"
+        case "KH đã gọi":
+          return "customer_deal"
+        case "ĐH đã chốt":
+          return "call_log"
+        case "Tỷ lệ chốt" :
+          return "rate_order"
+        case "ĐH thành công":
+          return "order_success"
+        case "ĐH hoàn":
+          return "order_return"
+        case "Doanh thu":
+          return "revenue"
+        case "Phí hoàn":
+          return "fee"
+        case "TG phản hồi TB":
+          return "time_reply"
+      }
+    },
+    handleClickTitle(e) {
+      e.stopPropagation()
+      console.log(e.target.innerText)
+      e.target.value >= 2 ? e.target.value = 0 : e.target.value++
+      this.headerArr.forEach(ele => {
+        if (ele != e.target) {
+          ele.value = 0
+          ele.children[1].children[0].style.color = '#adacac'
+          ele.children[1].children[1].style.color = '#adacac'
+        }
+      })
+      if (e.target.value == 1) {
+        this.listStaff.sort((a,b)=>{
+          if(a.work_result[this.mapData(e.target.innerText)] > b.work_result[this.mapData(e.target.innerText)]){
+            return -1
+          }
+          if(a.work_result[this.mapData(e.target.innerText)] < b.work_result[this.mapData(e.target.innerText)]){
+            return 1
+          }
+          return 0
+        })
+        e.target.children[1].children[0].style.color = '#2c2c2c'
+      } else if (e.target.value == 2) {
+        this.listStaff.reverse();
+        e.target.children[1].children[0].style.color = '#adacac'
+        e.target.children[1].children[1].style.color = '#2c2c2c'
+      } else {
+        this.listStaff=this.listStaffBackUp;
+        e.target.children[1].children[0].style.color = '#adacac'
+        e.target.children[1].children[1].style.color = '#adacac'
+      }
+    }
   }
   ,
   mounted() {
+    this.headerArr = this.$refs.header.querySelectorAll(".table-header")
+    this.headerArr.forEach(ele => {
+      ele.addEventListener("click", this.handleClickTitle);
+      ele.value = 0
+    })
+    console.log(this.headerArr)
     this.changeDateGet(this.startDay, this.endDay);
     setInterval(this.getListStaff(), 300000);
   }

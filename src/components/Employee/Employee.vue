@@ -56,9 +56,9 @@
   <td class="border border-slate">{{ staff.work_result.customer }}</td>
   <td class="border border-slate">{{ staff.work_result.customer_has_phone }}</td>
   <td class="border border-slate">{{ staff.work_result.customer_deal }}</td>
-  <td class="border border-slate">{{ staff.work_result.order_success }}</td>
-  <td class="border border-slate">{{ staff.work_result.rate_order }}%</td>
   <td class="border border-slate">{{ staff.work_result.call_log }}</td>
+  <td class="border border-slate">{{ staff.work_result.rate_order }}%</td>
+  <td class="border border-slate">{{ staff.work_result.order_success }}</td>
   <td class="border border-slate">{{ staff.work_result.order_return }}</td>
   <td class="border border-slate">{{ staff.work_result.revenue }}đ</td>
   <td class="border border-slate">{{ staff.work_result.fee }}đ</td>
@@ -67,7 +67,7 @@
 
 <script>
 import {useStaffStore} from "../../stores/StaffStore";
-import {mapActions,mapState} from "pinia";
+import {mapActions, mapState} from "pinia";
 
 export default {
   name: "Employee",
@@ -111,14 +111,17 @@ export default {
         return 'Đã nghỉ việc';
       }
     },
-    ...mapState(useStaffStore,['toastMessage'])
+    ...mapState(useStaffStore, ['toastMessage'])
   },
   methods: {
     ...mapActions(useStaffStore, {changeStatus: 'updateStaffStatus'}),
     async changeEmployeeStatus(status) {
       this.openDropDown = !this.openDropDown;
       await this.changeStatus(this.staff.id, status);
-      this.$toast.success(this.toastMessage);
+      console.log(this.toastMessage.type);
+      this.$toast.show(this.toastMessage.message, {
+        type: this.toastMessage.type,
+      });
     },
   },
 

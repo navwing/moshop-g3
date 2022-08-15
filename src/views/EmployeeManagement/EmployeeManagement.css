@@ -85,6 +85,7 @@ table{
 }
 .head-title{
     font-weight: 500;
+    z-index: -1;
 }
 thead{
     z-index: 2;
@@ -141,4 +142,5 @@ th{
 }
 .head-sort {
     color: #adacac;
+    z-index: -1;
 }

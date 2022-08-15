@@ -16,7 +16,9 @@
             </div>
           </div>
           <footer class="modal-footer">
-            <button class="acceptBtn btn disabled:bg-grey" @click="getListFilterStaff()" :disabled="isDisable">Xác nhận</button>
+            <button class="acceptBtn btn disabled:bg-grey" @click="getListFilterStaff()" :disabled="isDisable">Xác
+              nhận
+            </button>
             <button class="cancelBtn btn mt-1" @click="$emit('closeFilter')">Hủy bỏ</button>
           </footer>
         </div>
@@ -39,19 +41,26 @@ export default {
   },
   computed: {
     isDisable() {
-     if(this.startDay === "" || this.endDay === "") {
-       return true;
-     } else {
-       return false;
-     }
+      if (this.startDay === "" || this.endDay === "") {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
     ...mapActions(useStaffStore, ["getListStaff"]),
     ...mapActions(useStaffStore, ["changeDateGet"]),
     getListFilterStaff() {
-      this.changeDateGet(this.startDay, this.endDay);
-      this.getListStaff();
+      if (this.startDay > this.endDay) {
+        this.$toast.error("Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+      }
+      else {
+        this.changeDateGet(this.startDay, this.endDay);
+        this.getListStaff();
+        this.$emit('closeFilter');
+        this.$emit('changeMethod');
+      }
     }
   }
 }
