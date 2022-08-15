@@ -22,14 +22,15 @@ import {
     faGear,
     faPlus, faArrowDown, faArrowUp, faCalendar,faUserSecret,faEye,faChevronLeft 
 } from '@fortawesome/free-solid-svg-icons'
-
+ 
+import { faClock } from '@fortawesome/free-regular-svg-icons'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
 
 library.add(faAngleDown, faChartSimple, faUserGroup, faComment, faVideo, faUsers, faClipboardList,
     faArrowUpFromBracket, faCheck, faUserPlus, faUser, faBox, faCircleInfo, faTag, faArrowRightFromBracket, faGear, faPlus
-    , faArrowDown, faArrowUp, faCalendar,faUserSecret,faEye,faChevronLeft)
+    , faArrowDown, faArrowUp, faCalendar,faUserSecret,faEye,faChevronLeft, faClock)
 
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
