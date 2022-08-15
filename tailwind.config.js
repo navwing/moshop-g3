@@ -14,5 +14,7 @@ module.exports = {
       default_green:'#069255',
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms')
+  ],
 }
