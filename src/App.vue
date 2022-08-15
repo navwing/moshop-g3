@@ -1,19 +1,11 @@
-<template>
-    <AddUser/>
-</template>
-<script>
-import AddUser from "./assets/components/AddUser.vue"
-export default {
-    components: {
-        AddUser
-    },
-    data() {
-        return {
-
-        }
-    }
-}
+<script setup>
+import {RouterLink, RouterView} from 'vue-router'
 </script>
+
+<template>
+  <router-view></router-view>
+</template>
+
 <style scoped>
 
 </style>
