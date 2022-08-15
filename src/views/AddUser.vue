@@ -1,4 +1,5 @@
 <template>
+  <NavBar></NavBar>
   <section class="createUser pt-[24px] pb-[20px]">
     <div class="container mx-auto">
       <div class="flex justify-between mb-[36px]">
@@ -22,8 +23,10 @@ import AddNewUser from "../components/AddNewUser.vue";
 import AddNewProfile from "../components/AddNewProfile.vue";
 import AddJobInfo from "../components/AddJobInfo.vue";
 import axios from "axios";
+import NavBar from "../components/NavBar.vue";
 export default {
   components: {
+    NavBar,
     AfterSave,
     AddNewUser,
     AddNewProfile,
