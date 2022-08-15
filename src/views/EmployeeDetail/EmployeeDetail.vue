@@ -261,11 +261,11 @@
                             <img
                               src="https://scontent-hkt1-2.xx.fbcdn.net/v/t1.6435-1/115988338_101546078327729_390394737921795991_n.jpg?stp=c0.0.160.160a_dst-jpg_p160x160&_nc_cat=108&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=kc2rj2UO2fMAX_iRSqU&_nc_oc=AQkFa9upi5X1f2AYOdjqZoy5CenDm6AUbaE027MKY_LZhWgAs1NtFoz5621owPB3BTA&_nc_ht=scontent-hkt1-2.xx&edm=AOf6bZoEAAAA&oh=00_AT_ORCSxsFWtBix0NwAMp87gcYv7MuvaNZ76F5PSjfy5oA&oe=632172AD"
                             />
-                            <span>Test Moshop App</span>
+                            <span>Testt Moshop App</span>
                           </label>
                         </div>
                       </div>
-                    </div>
+                    </div> 
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
