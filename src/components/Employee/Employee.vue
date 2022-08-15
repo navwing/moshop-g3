@@ -49,7 +49,8 @@
         </div>
       </div>
       <div class="staff-right">
-        <a href="#" class="viewButton">Xem</a>
+        <!-- <router-link to="/detail">Xem</router-link> -->
+        <a href="#" class="viewButton" >Xem</a>
       </div>
     </div>
   </td>
@@ -131,3 +132,4 @@ export default {
 <style scoped>
 @import "Employee.css";
 </style>
+

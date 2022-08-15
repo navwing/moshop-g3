@@ -1,6 +1,7 @@
 <script>
 // import { RouterLink, RouterView } from 'vue-router'
 // import { LockClosedIcon } from '@heroicons/vue/solid' -- tail
+
 import axios from "axios";
 import router from "../router";
 
@@ -8,6 +9,7 @@ export default {
   data() {
     return {
       isShow: true,
+
       password: 'Reset0103',
       username: 'hncp7@gmail.com'
     };
@@ -53,6 +55,7 @@ export default {
         <h1 class="txtLogin mt-6 text-center text-2xl text-gray-900">
           Đăng nhập
         </h1>
+
         <div
             class="mt-8 space-y-6 border-radius: 0.25rem"
         >
@@ -61,6 +64,7 @@ export default {
             <div class="rounded-md">
               <label for="email-address">Số điện thoại hoặc email</label>
               <input
+
                   id="email-address"
                   name="email"
                   type="text"
@@ -137,6 +141,7 @@ export default {
                       stroke-linejoin="round"
                       stroke-width="2"
                       d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+
                   ></path>
                 </svg>
               </span>
@@ -151,6 +156,7 @@ export default {
                 <LockClosedIcon
                     class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
                     aria-hidden="true"
+
                 />
               </span>
               Đăng nhập
@@ -160,8 +166,10 @@ export default {
             <div class="flex items-center">
               <p>
                 Bạn chưa có tài khoản?
+
                 <a href="" style="color: #02a45e"
                 >Đăng ký ngay!</a
+
                 >
               </p>
             </div>
@@ -178,10 +186,12 @@ body {
   Freesans, sans-serif !important;
 }
 
+
 .container {
   height: 100vh;
   background-color: #219653;
 }
+
 
 .max-w-md {
   height: 460px;
@@ -192,6 +202,7 @@ body {
   transform: translateX(30%);
   width: 62%;
 }
+
 
 .txtLogin {
   font-size: 18px;
@@ -207,6 +218,11 @@ body {
 .rounded-md {
   position: relative;
 }
+
+.rounded-md {
+  position: relative;
+}
+
 
 .forgetpass {
   position: absolute;
@@ -228,6 +244,8 @@ body {
   top: 60%;
 }
 
+
+
 .eye {
   position: absolute;
   right: 15px;
@@ -238,6 +256,13 @@ body {
   width: 30px;
   height: 30px;
   z-index: 30;
+}
+
+.rounded-md label {
+  color: #5c5c5c;
+  font: 16px;
+  font-family: "Roboto", Helvetica, Arial, "DejaVu Sans", "Liberation Sans",
+    "Freesans", sans-serif !important;
 }
 
 .rounded-md label {
