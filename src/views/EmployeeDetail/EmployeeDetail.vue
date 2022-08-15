@@ -252,7 +252,7 @@
                       <span class="custom-checkmark"></span>
                       <span class="customcheckbox-span">Chats chốt đơn</span>
                     </label>
-                    <!-- <div class="pageBox">
+                    <div class="pageBox">
                       <div class="pageBox-content">
                         <div class="pageBox-item">
                           <label type="checkbox-container items-center">
@@ -265,7 +265,7 @@
                           </label>
                         </div>
                       </div>
-                    </div> -->
+                    </div>
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
