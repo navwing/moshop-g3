@@ -17,10 +17,10 @@
   </section>
 </template>
 <script>
-import AfterSave from "./AfterSave.vue"
-import AddNewUser from "./AddNewUser.vue";
-import AddNewProfile from "./AddNewProfile.vue";
-import AddJobInfo from "./AddJobInfo.vue";
+import AfterSave from "../components/AfterSave.vue"
+import AddNewUser from "../components/AddNewUser.vue";
+import AddNewProfile from "../components/AddNewProfile.vue";
+import AddJobInfo from "../components/AddJobInfo.vue";
 import axios from "axios";
 export default {
   components: {
