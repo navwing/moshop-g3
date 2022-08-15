@@ -35,7 +35,6 @@
     height: 10px;
     background-color: #ff5550;
     border-radius: 50%;
-
 }
 
 .circle-signal {
@@ -83,6 +82,9 @@
 }
 table{
     border: unset;
+}
+.head-title{
+    font-weight: 500;
 }
 thead{
     z-index: 2;

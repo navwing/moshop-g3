@@ -1,3 +1,4 @@
+
 <script >
 import { RouterLink, RouterView } from 'vue-router'
 // import NavBar from "./components/NavBar.vue";
@@ -14,9 +15,10 @@ export default{
   <!-- <NavBar/>
   <EmployeeManagement/>
   <Login/> -->
-  <EmployeeDetail/>
-</template>
+  <!-- <EmployeeDetail/> -->
+  <router-view></router-view>
 
+</template>
 <style scoped>
 
 </style>

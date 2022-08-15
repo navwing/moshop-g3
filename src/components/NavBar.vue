@@ -1,5 +1,5 @@
 <template>
-  <div class="navBar flex text-white bg-default_green">
+  <div class="navBar flex text-white bg-default_green mb-7 ">
     <div class="navBar__logo">
       <a href="#" class="navBar__brand ">moshop</a>
     </div>
@@ -70,7 +70,7 @@
                  Quản lý tag
                 </a>
               </div>
-              <div class="dropdown-item">
+              <div class="dropdown-item" @click="logOut">
                 <a href="#" class="w-100 h-100 flex items-center whitespace-nowrap">
                   <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" class="mr-2 text-xl"/>
                   Đăng xuất
@@ -79,48 +79,47 @@
 
             </div>
           </div>
-
         </li>
-        <li style="margin-left: 32px">
-          <a href="#" class="navlink">
+        <li style="margin-left: 32px" v-tooltip="'Báo cáo'">
+          <a href="#" class="navlink" >
             <font-awesome-icon icon="fa-solid fa-chart-simple" class="text-2xl"/>
-            <span>Báo Cáo</span>
+            <span class="hidden lg:block">Báo Cáo</span>
           </a>
         </li>
         <li>
-          <a href="#" class="navlink">
+          <a href="#" class="navlink" v-tooltip="'Quản lý khách hàng'">
             <font-awesome-icon icon="fa-solid fa-user-group" class="text-2xl"/>
-            <span>Khách Hàng</span>
+            <span class="hidden lg:block">Khách Hàng</span>
           </a>
         </li>
         <li>
-          <a href="#" class="navlink">
+          <a href="#" class="navlink"  v-tooltip="'Chats'">
             <font-awesome-icon icon="fa-solid fa-comment" class="text-2xl"/>
-            <span>Chats</span>
+            <span class="hidden lg:block">Chats</span>
           </a>
         </li>
         <li>
-          <a href="#" class="navlink">
+          <a href="#" class="navlink"  v-tooltip="'Lives'">
             <font-awesome-icon icon="fa-solid fa-video" class="text-2xl"/>
-            <span>Lives</span>
+            <span class="hidden lg:block">Lives</span>
           </a>
         </li>
-        <li class="bg-white text-default_green">
+        <li class="bg-white text-default_green"  v-tooltip="'Nhân viên'">
           <a href="#" class="navlink">
             <font-awesome-icon icon="fa-solid fa-users" class="text-2xl "/>
-            <span>Nhân Viên</span>
+            <span class="hidden lg:block">Nhân Viên</span>
           </a>
         </li>
         <li>
-          <a href="#" class="navlink">
+          <a href="#" class="navlink"  v-tooltip="'Đơn hàng'">
             <font-awesome-icon icon="fa-solid fa-clipboard-list" class="text-2xl"/>
-            <span>Đơn Hàng</span>
+            <span class="hidden lg:block">Đơn Hàng</span>
           </a>
         </li>
-        <li style="background-color: #da4838">
+        <li style="background-color: #da4838"  v-tooltip="'Đăng đơn'">
           <a href="#" class=" createPackage">
             <font-awesome-icon icon="fa-solid fa-arrow-up-from-bracket" class="text-2xl"/>
-            <span>Đăng Đơn</span>
+            <span class="hidden lg:block">Đăng Đơn</span>
           </a>
         </li>
       </ul>
@@ -137,6 +136,12 @@ export default {
       isOpenDropDown: false
     }
   },
+  methods:{
+    logOut() {
+      localStorage.removeItem("accessToken")
+      this.$router.go("/login")
+    }
+  }
 }
 </script>
 
