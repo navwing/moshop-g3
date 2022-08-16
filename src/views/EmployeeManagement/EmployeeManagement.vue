@@ -13,7 +13,6 @@
               <div class="circle-signal circle-1 absolute"></div>
               <div class="circle-signal circle-2 absolute"></div>
             </div>
-
           </div>
           <div class="pl-4" style="font-style: italic;">
             Live (cập nhật {{ updateTime }} )
@@ -44,10 +43,10 @@
             <font-awesome-icon icon="fa-solid fa-gear"/>
             <span>KPIs nhân viên</span>
           </button>
-          <a href="#" class="btn-utility">
+          <router-link to="/create" class="btn-utility">
             <font-awesome-icon icon="fa-solid fa-plus"/>
             <span> Thêm nhân viên</span>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>

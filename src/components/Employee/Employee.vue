@@ -50,7 +50,7 @@
       </div>
       <div class="staff-right">
         <!-- <router-link to="/detail">Xem</router-link> -->
-        <a href="#" class="viewButton" >Xem</a>
+        <router-link :to="{path:'/detail/'+staff.id}" class="viewButton">Xem</router-link>
       </div>
     </div>
   </td>

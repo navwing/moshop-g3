@@ -35,11 +35,15 @@ const router = createRouter({
             component: AddUser,
         },
         {
-            path:'/detail',
-            name:'detail',
-            component:EmployeeDetail,
+            path: '/detail/:id',
+            name: 'detail',
+            component: EmployeeDetail,
+        },
+        {
+            path: '/edit/:id',
+            name: 'edit',
+            component: AddUser,
         }
-
 
     ]
 })

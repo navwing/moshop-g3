@@ -88,4 +88,10 @@
     background-color: #069255;
     border-radius: 0.25rem;
 }
+input:checked{
+    background-color: #28a745;
+}
+input{
+   color: #28a745;
+}
 

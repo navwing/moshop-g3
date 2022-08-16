@@ -64,13 +64,12 @@ export default {
             <div class="rounded-md">
               <label for="email-address">Số điện thoại hoặc email</label>
               <input
-
                   id="email-address"
                   name="email"
                   type="text"
                   autocomplete="email"
                   required=""
-                  class="appearance-none rounded-none relative block w-full px-3 py-2 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  class="appearance-none border-none rounded-none relative block w-full px-3 py-2 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Nhập tên cửa hàng"
                   v-model="username"
               />
@@ -83,7 +82,7 @@ export default {
                   type="password"
                   autocomplete="current-password"
                   required=""
-                  class="appearance-none rounded-none relative block w-full px-3 py-2 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  class="appearance-none rounded-none border-none relative block w-full px-3 py-2 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Nhập mật khẩu"
                   v-model="password"
                   v-if="isShow"
@@ -95,7 +94,7 @@ export default {
                   ref="password-field"
                   autocomplete="current-password"
                   required=""
-                  class="appearance-none rounded-none relative block w-full px-3 py-2 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  class="appearance-none rounded-none border-none relative block w-full px-3 py-2 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Nhập mật khẩu"
                   v-model="password"
                   v-else
@@ -260,7 +259,7 @@ body {
 
 .rounded-md label {
   color: #5c5c5c;
-  font: 16px;
+  font-size: 16px;
   font-family: "Roboto", Helvetica, Arial, "DejaVu Sans", "Liberation Sans",
     "Freesans", sans-serif !important;
 }
@@ -276,6 +275,8 @@ body {
 
 .rounded-md input {
   border-bottom: 1px solid #e8e8e8;
+  background-color: rgb(232, 240, 254)!important;
+
 }
 
 input:focus {

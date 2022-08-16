@@ -16,26 +16,25 @@
               NV online
             </div>
             <div class="onlineSetting__item">
-              <input type="radio" value="all" v-model="KpiOnl"
-                     class=" checked:bg-default_green cursor-pointer "
-              style="color: #28a745 !important;">
-              <span>Nhận tất cả hội thoại</span>
+              <input id="onlALl" type="radio" value="all" v-model="KpiOnl"
+                     class=" checked:bg-default_green cursor-pointer ">
+              <label for="onlALl">Nhận tất cả hội thoại</label>
             </div>
             <div class="onlineSetting__item">
-              <input type="radio" value="share_work" v-model="KpiOnl">
-              <span>Nhận phần hội thoại được chia đều</span>
+              <input id="onlShareWork" type="radio" value="share_work" v-model="KpiOnl">
+              <label for="onlShareWork">Nhận phần hội thoại được chia đều</label>
             </div>
             <div class="onlineSetting__item">
-              <input type="radio" value="first_view" v-model="KpiOnl">
-              <span>Nhận phần hội thoại bấm xem trước tiên</span>
+              <input  id="onlFirstView" type="radio" value="first_view" v-model="KpiOnl">
+              <label for="onlFirstView">Nhận phần hội thoại bấm xem trước tiên</label>
             </div>
             <div class="onlineSetting__item">
-              <input type="radio" value="first_reply" v-model="KpiOnl">
-              <span>Nhận phần hội thoại trả lời trước tiên</span>
+              <input id="onlFirstReply" type="radio" value="first_reply" v-model="KpiOnl">
+              <label for="onlFirstReply">Nhận phần hội thoại trả lời trước tiên</label>
             </div>
             <div class="onlineSetting__item">
-              <input type="radio" value="first_deal" v-model="KpiOnl">
-              <span>Nhận phần hội thoại chốt đơn trước tiên</span>
+              <input id="onlFirstDeal" type="radio" value="first_deal" v-model="KpiOnl">
+              <label for="onlFirstDeal">Nhận phần hội thoại chốt đơn trước tiên</label>
             </div>
           </div>
           <div class="offlineSetting" v-if="KpiOnl!=='all'">
@@ -43,12 +42,12 @@
               NV offline
             </div>
             <div class="offlineSetting__item">
-              <input type="radio" value="keep" v-model="KpiOff">
-              <span>Tiếp tục hội thoại sau khi offline</span>
+              <input id="offKeep" type="radio" value="keep" v-model="KpiOff">
+              <label for="offKeep">Tiếp tục hội thoại sau khi offline</label>
             </div>
             <div class="offlineSetting__item">
-              <input type="radio" value="share" v-model="KpiOff">
-              <span>Chuyển hội thoại chưa trả lời cho nhân viên</span>
+              <input id="offShare" type="radio" value="share" v-model="KpiOff">
+              <label for="offShare">Chuyển hội thoại chưa trả lời cho nhân viên</label>
             </div>
           </div>
           <footer class="modal-footer">

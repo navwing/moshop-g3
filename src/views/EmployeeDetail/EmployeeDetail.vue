@@ -4,11 +4,11 @@
     <div class="staffdetail-part">
       <div class="staffdetail-top">
         <div class="top-back">
-          <a href="#">
+          <button @click="$router.go(-1)">
             <img
               src="https://moshop.com.vn/_nuxt/img/caret-left-green.977777e.svg"
             />
-          </a>
+          </button>
         </div>
         <div class="top-infor">
           <div class="infor-avatar">
@@ -84,7 +84,7 @@
           </div>
         </div>
         <div class="top-action">
-          <button class="btn-editstaff">Sửa</button>
+          <router-link :to="{path:'/edit/'+shopUserDetail.id}" class="btn-editstaff flex items-center justify-center">Sửa</router-link>
         </div>
       </div>
       <!--StaffDetail-top-end-->
@@ -338,9 +338,6 @@
                 </div>
                 <div class="logList">
                   <div class="logList-perDay">
-                    <!-- <div class="logList-perDayTitle">
-                      352 ngày trước - thứ Tư, ngày 25/08/2021
-                    </div> -->
                     <div
                       class="activity"
                       v-for="(act, id) in history_action"
@@ -403,6 +400,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$route.params.id);
     // call api chi tiet thong tin nhan vien
     axios
       .get(

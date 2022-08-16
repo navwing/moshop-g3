@@ -3,7 +3,7 @@
   <section class="createUser pt-[24px] pb-[20px]">
     <div class="container mx-auto">
       <div class="flex justify-between mb-[36px]">
-        <font-awesome-icon icon="fa-solid fa-angle-left" class="text-[#069255] text-[32px]"/>
+        <font-awesome-icon icon="fa-solid fa-angle-left" class="text-[#069255] text-[32px]" @click="$router.go(-1)"/>
         <button @click="handleSaveAll" class="bg-[#069255] hover:bg-[#218838] py-[7px] px-[52px] rounded-[20px] border-2 border-[#28a745] font-medium text-white text-[14px] cursor-pointer" type="submit">
           Lưu
         </button>
@@ -56,6 +56,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route.params.id);
     axios 
       .get("https://x.ghtk.vn/api/fulfilment/v1/shops/get-pick-addresses", {
         headers: {
