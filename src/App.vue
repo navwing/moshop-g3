@@ -1,9 +1,6 @@
 
 <script >
 import { RouterLink, RouterView } from 'vue-router'
-// import NavBar from "./components/NavBar.vue";
-// import EmployeeManagement from './views/EmployeeManagement/EmployeeManagement.vue';
-// import Login from './views/Login.vue';
 import EmployeeDetail from './views/EmployeeDetail/EmployeeDetail.vue';
 
 export default{
@@ -12,13 +9,53 @@ export default{
 </script>
 
 <template>
-  <!-- <NavBar/>
-  <EmployeeManagement/>
-  <Login/> -->
-  <!-- <EmployeeDetail/> -->
-  <router-view></router-view>
-
+  <div class="mobile pt-40">
+    <h2 class="text-center text-3xl ">Vui lòng tải ứng dụng <br> để có trải nghiệm tốt nhất</h2>
+    <div class="downloadButtonList flex justify-center items-center justify-evenly">
+      <a href="https://play.google.com/store/apps/details?id=com.ghtk.xproject" >
+        <img src="src/assets/images/GooglePlay.png" alt="google play">
+      </a>
+      <a href="https://apps.apple.com/us/app/moshop-b%C3%A1n-h%C3%A0ng-chuy%C3%AAn-nghi%E1%BB%87p/id1479502357">
+        <img src="src/assets/images/AppleStore.png" alt="apple store">
+      </a>
+    </div>
+  </div>
+  <div class="laptop">
+    <router-view ></router-view>
+  </div>
 </template>
 <style scoped>
+@media(max-width: 500px){
+  .mobile{
+    display: block;
+  }
+  .downloadButtonList a{
+    width: 30%;
+    height: 100%;
+    animation: buttonRotate 1.2s infinite;
 
+  }
+  .laptop{
+    display: none;
+  }
+}
+@media(min-width: 501px){
+  .mobile{
+    display: none;
+  }
+  .laptop{
+    display: block;
+  }
+}
+@keyframes buttonRotate {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100%{
+    transform: rotate(-10deg);
+  }
+}
 </style>

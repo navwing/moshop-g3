@@ -119,7 +119,6 @@ export default {
     async changeEmployeeStatus(status) {
       this.openDropDown = !this.openDropDown;
       await this.changeStatus(this.staff.id, status);
-      console.log(this.toastMessage.type);
       this.$toast.show(this.toastMessage.message, {
         type: this.toastMessage.type,
       });

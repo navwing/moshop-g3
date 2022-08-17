@@ -52,9 +52,7 @@ export const useStaffStore = defineStore("Staff", {
                     },
                 })
                 this.changeToastMessage("success", res.data.message)
-
-                    this.getListStaff();
-
+                this.getListStaff();
             } catch (e) {
                 this.changeToastMessage("error","Có lỗi xảy ra")
             }

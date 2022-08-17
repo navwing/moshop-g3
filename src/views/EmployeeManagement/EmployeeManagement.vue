@@ -192,10 +192,13 @@
           </th>
         </tr>
         </thead>
-        <tbody class="text-center">
+        <tbody class="text-center" v-if="listStaff.length>0">
         <tr v-for="staff in listStaff">
           <Employee :staff="staff"/>
         </tr>
+        </tbody>
+        <tbody v-else class="text-center">
+        <tr >Chưa có nhân viên nào vui lòng thêm nhân viên</tr>
         </tbody>
       </table>
     </div>
@@ -359,7 +362,6 @@ export default {
       ele.addEventListener("click", this.handleClickTitle);
       ele.value = 0
     })
-    console.log(this.headerArr)
     this.changeDateGet(this.startDay, this.endDay);
     setInterval(this.getListStaff(), 300000);
   }
