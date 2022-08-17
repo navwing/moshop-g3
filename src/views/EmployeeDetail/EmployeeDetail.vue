@@ -1,5 +1,5 @@
 <template>
-  <NavBar/>
+  <NavBar />
   <div class="main">
     <div class="staffdetail-part">
       <div class="staffdetail-top">
@@ -250,23 +250,25 @@
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
                       <input class="page-checkbox" type="checkbox" />
-                      <span class="custom-checkmark"></span>
+                      <span class="custom-checkmark"  @click="showPage = !showPage"></span>
                       <span class="customcheckbox-span">Chats chốt đơn</span>
                     </label>
-                    <div class="pageBox">
-                      <div class="pageBox-content">
-                        <div class="pageBox-item">
-                          <label type="checkbox-container items-center">
-                            <input class="page-checkbox" type="checkbox" />
-                            <span class="custom-checkmark"></span>
-                            <img
-                              src="https://scontent-hkt1-2.xx.fbcdn.net/v/t1.6435-1/115988338_101546078327729_390394737921795991_n.jpg?stp=c0.0.160.160a_dst-jpg_p160x160&_nc_cat=108&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=kc2rj2UO2fMAX_iRSqU&_nc_oc=AQkFa9upi5X1f2AYOdjqZoy5CenDm6AUbaE027MKY_LZhWgAs1NtFoz5621owPB3BTA&_nc_ht=scontent-hkt1-2.xx&edm=AOf6bZoEAAAA&oh=00_AT_ORCSxsFWtBix0NwAMp87gcYv7MuvaNZ76F5PSjfy5oA&oe=632172AD"
-                            />
-                            <span>Test Moshop App</span>
-                          </label>
-                        </div>
-                      </div>
-                    </div> 
+                    <div class="pageBox" v-show="showPage">
+                      <label class="checkbox-container items-center">
+                        <input
+                          class="page-checkbox"
+                          type="checkbox"
+                          disabled="disabled"
+                        />
+                        <span class="custom-checkmark"></span>
+                        <img
+                          class="rounded-full mr-2"
+                          src="https://scontent-hkt1-2.xx.fbcdn.net/v/t1.6435-1/115988338_101546078327729_390394737921795991_n.jpg?stp=c0.0.160.160a_dst-jpg_p160x160&_nc_cat=108&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=0k-k3TFs3HUAX9nUqp5&_nc_oc=AQmBBWyhwmmQwwZSJ_s_piyfJa279CWieuD0zW3cwvyzjoYqgIYSZdJDxTzhwmrnI7M&_nc_ht=scontent-hkt1-2.xx&edm=AOf6bZoEAAAA&oh=00_AT_7trEDxmbJ5mvxl4a_Bi78mkzeDEPoLxLx1cmIvmzWEA&oe=632172AD"
+                        />
+                        <span>Test Moshop app</span>
+                      </label>
+                    </div>
+                    
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
@@ -367,7 +369,7 @@ import NavBar from "../../components/NavBar.vue";
 
 export default {
   name: "Employee",
-  components: {NavBar},
+  components: { NavBar },
   // props: ['id'],
   data() {
     return {
@@ -377,6 +379,7 @@ export default {
       work_address: [],
       work_results: {},
       history_action: [],
+      showPage: false,
     };
   },
   computed: {
