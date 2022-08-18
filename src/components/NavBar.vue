@@ -8,7 +8,7 @@
         <li>
           <div class="dropdown-management relative" @click="isOpenDropDown=!isOpenDropDown">
             <div class="navbar__dropdown flex items-center">
-              <div class="flex items-center navbar__dropdown__email px-2">emailtest@gmail.com</div>
+              <div class="flex items-center navbar__dropdown__email px-2">{{userInfo.shop?.email}}</div>
               <div class="pl-2">
                 <font-awesome-icon icon="fa-solid fa-angle-down"/>
               </div>
@@ -21,8 +21,8 @@
                       <img src="https://moshop.com.vn/_nuxt/img/avatar_ghtk.06fe700.png" alt="ava">
                     </div>
                     <div class="account-name mx-2">
-                      <strong>GHTK</strong>
-                      <p>testemailasasdasdas@gmail.com</p>
+                      <strong>{{userInfo.shop?.g_order}}-{{userInfo.user?.fullname}}</strong>
+                      <p>{{userInfo.shop?.email}}</p>
                     </div>
                   </div>
                   <div class="item-check text-default_green">
@@ -36,7 +36,7 @@
                     </div>
                     <div class="account-name mx-2">
                       <strong>GHTK</strong>
-                      <p >testemailasdasdasasdas@gmail.com</p>
+                      <p >testemail@gmail.com</p>
                     </div>
                   </div>
                 </div>
@@ -133,7 +133,8 @@ export default {
   name: "NavBar",
   data () {
     return {
-      isOpenDropDown: false
+      isOpenDropDown: false,
+      userInfo:'',
     }
   },
   methods:{
@@ -141,6 +142,10 @@ export default {
       localStorage.removeItem("accessToken")
       this.$router.go("/login")
     }
+  },
+  mounted(){
+    this.userInfo= JSON.parse(localStorage.getItem("userInfo"))
+    console.log(this.userInfo)
   }
 }
 </script>

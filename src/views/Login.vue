@@ -32,6 +32,7 @@ export default {
         });
         if (response.status === 200) {
           localStorage.setItem('accessToken', response.data.data.access_token);
+          localStorage.setItem('userInfo', JSON.stringify( response.data.data));
           this.$router.push('/home');
         }
       } catch (error) {

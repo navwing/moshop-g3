@@ -49,8 +49,8 @@
         </div>
       </div>
       <div class="staff-right">
-        <!-- <router-link to="/detail">Xem</router-link> -->
-        <router-link :to="{path:'/detail/'+staff.id}" class="viewButton">Xem</router-link>
+
+        <router-link :to="{path:'/detail/'+staff.id}" class="viewButton hover:text-white hover:bg-default_green">Xem</router-link>
       </div>
     </div>
   </td>
