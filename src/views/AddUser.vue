@@ -7,11 +7,11 @@
         <button @click="handleSaveAll" class="bg-[#069255] hover:bg-[#218838] py-[7px] px-[52px] rounded-[20px] border-2 border-[#28a745] font-medium text-white text-[14px] cursor-pointer" type="submit">
           Lưu
         </button>
-        <AfterSave :isShowSuccessAll="isShowSuccessAll" :isShowErrorAll="isShowErrorAll"/>
+        <AfterSave @closeBtn="hiddenCloseBtn" :isShowSuccessAll="isShowSuccessAll" :isShowErrorAll="isShowErrorAll"/>
       </div>
-      <AddNewUser @getDataAddNew="getDataAddNew" :isGetData="isGetData"/>
+      <AddNewUser @checkError="checkError" :isGetData="isGetData" @getDataAddNew="getDataAddNew"/>
       <div class="grid grid-cols-2">
-        <AddJobInfo :workingAddress="workingAddress"/>
+        <AddJobInfo :workingAddress="workingAddress" @getDataAddJobInfo="getDataAddJobInfo" :isGetData="isGetData" @getDATW="getDATW" @getCTCO="getCTCO"/>
         <AddNewProfile/>
       </div>
     </div>
@@ -35,25 +35,86 @@ export default {
   data() {
     return {
       workingAddress: '',
+
       // test: "hello"
       isGetData: true,
       isShowSuccessAll: false,
-      isShowErrorAll: false
+      isShowErrorAll: false,
+      newPerson: {
+        birthday: '',
+        fullname: '',
+        tel: '',
+        password: '',
+        live_address: '',
+        avatar: '',
+        work_first_date: '',
+        work_address: '',
+        work_time_repeats: [
+          {
+            start_time: '',
+            end_time: '',
+            repeats: [
+              
+            ]
+          }
+        ],
+        screens: [
+
+        ],
+        pages: [],
+        cmnd_images: [],
+        syll_images: [],
+        hdld_images: [],
+        deleted_image_ids: []
+      },
     };
   },
   methods: {
+    checkError(isError){
+      if(isError){
+        this.isShowSuccessAll = true
+      }
+      console.log(this.isShowSuccessAll);
+    },
+    hiddenCloseBtn(){
+      this.isShowSuccessAll = false
+    },
     handleSaveAll() {
-      console.log(this.isGetData)
-      this.isGetData = !this.isGetData
+      this.isGetData = !this.isGetData;
+      // console.log(this.isGetData)
     },
     getDataAddNew(userInfo){
-      console.log(userInfo);
-      if (!userInfo.name) {
+      if (userInfo.isErrorName === false || userInfo.isErrorPhone === false || userInfo.isErrorPassword === false) {
         this.isShowErrorAll = !this.isShowErrorAll
-      } else if (!userInfo.phone) {
-        this.isShowSuccessAll = !this.isShowSuccessAll
+        console.log(this.isShowErrorAll);
+      } else {
+        // this.checkError(this.isError)
+        this.isShowSuccessAll = !this.isShowSuccessAll;
+        this.newPerson.fullname = userInfo.name;
+        this.newPerson.tel = userInfo.phone;
+        this.newPerson.password = userInfo.password;
+        this.newPerson.live_address = userInfo.live_address;
+        this.newPerson.birthday = userInfo.birthday;
+        console.log(this.newPerson);
       }
-    }
+    },
+    getDataAddJobInfo(userInfo){
+      this.newPerson.work_first_date = userInfo.work_first_date;
+      this.newPerson.work_address = userInfo.addressCurrent;
+      this.newPerson.screens = userInfo.listScreen;
+      console.log(this.newPerson)
+      // console.log(userInfo);
+    },
+    getDATW(userInfo){
+      this.newPerson.work_time_repeats.start_time = userInfo.start_time;
+      this.newPerson.work_time_repeats.end_time = userInfo.end_time;
+      this.newPerson.work_time_repeats.repeats = userInfo.listRepeatDate;
+      console.log(this.newPerson)
+    },
+    getCTCO(userInfo){
+      this.newPerson.pages = userInfo;
+      console.log(this.newPerson.pages);
+    },
   },
   mounted() {
     console.log(this.$route.params.id);
@@ -65,13 +126,16 @@ export default {
         },
       })
       .then((response) => {
-        // this.workingAddress = (response.data.data.find(element => element.id == 3606788)).address
         this.workingAddress = (response.data.data.map(element => element.address))
         console.log(this.workingAddress);
       })
       .catch(function(error) {
         console.log(error);
       });
+    // axios
+    //   .post("http://x.ghtk.vn/api/v2/staff/create", {
+        
+    //   })
   },
 };
 </script>
