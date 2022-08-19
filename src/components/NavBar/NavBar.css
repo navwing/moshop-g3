@@ -1,0 +1,105 @@
+
+.navBar {
+    padding: 0 0 0 15px;
+    height: 48px;
+}
+
+.navBar__brand {
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
+
+.navBar__logo a {
+    height: 100%;
+    align-items: center;
+    font-size: 31px;
+    font-weight: 700;
+    margin-right: 12px;
+}
+
+ul li {
+    cursor: pointer;
+    text-align: center;
+}
+
+.navbar__dropdown {
+    padding: 3px 4px;
+    color: #fff;
+    border-left: 3px solid #fff;
+    height: 22px;
+}
+
+.navbar__dropdown__email {
+    max-width: 186px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 700;
+    font-size: 17px;
+}
+
+.navlink ,.createPackage {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+.navlink:hover{
+    background-color: white;
+    color: #069255;
+}
+.navlink  span {
+    line-height: 1;
+    margin-top: 4px;
+    margin-left: 8px;
+    font-weight: 700;
+
+}
+.createPackage span{
+    line-height: 1;
+    margin-top: 4px;
+    margin-left: 8px;
+    font-weight: 700;
+
+}
+
+.navbar__dropdown__content{
+    position: absolute;
+    z-index: 1001;
+    left: 15px;
+    top: 28px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 25%);
+    border-radius: 5px;
+    min-width: 100%;
+}
+.account-list{
+    max-height: 203px;
+    overflow: auto;
+
+}
+
+.account-item{
+    padding: 5px 7px 5px 10px;
+}
+.avatar{
+    width: 30px;
+    height: 30px
+}
+.account-name p,strong{
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+.add-account{
+    margin-top: 5px;
+    padding: 7px 10px;
+}
+.manage-account{
+    padding: 7px 10px;
+}
+.dropdown-item{
+    padding: 5px 10px;
+}

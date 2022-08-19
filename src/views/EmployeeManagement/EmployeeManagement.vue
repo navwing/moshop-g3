@@ -209,7 +209,7 @@ import {startOfDay, endOfDay, format, startOfWeek, endOfWeek, startOfMonth, endO
 import Employee from "../../components/Employee/Employee.vue";
 import KPIsEmployee from "../../components/KPIsEmployee/KPIsEmployee.vue";
 import SettingFilter from "../../components/SettingFilter/SettingFilter.vue";
-import NavBar from "../../components/NavBar.vue";
+import NavBar from "../../components/NavBar/NavBar.vue";
 import {useStaffStore} from "../../stores/StaffStore";
 import {mapActions, mapState} from "pinia";
 import axios from "axios";

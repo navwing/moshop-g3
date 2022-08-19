@@ -3,7 +3,7 @@
 // import { LockClosedIcon } from '@heroicons/vue/solid' -- tail
 
 import axios from "axios";
-import router from "../router";
+import router from "../../router";
 
 export default {
   data() {
@@ -50,7 +50,7 @@ export default {
   >
     <div class="max-w-md w-full space-y-8">
       <div>
-        <img class="img" src="../assets/images/moshop.png"/>
+        <img class="img" src="../../assets/images/moshop.png"/>
       </div>
       <div class="bg-white">
         <h1 class="txtLogin mt-6 text-center text-2xl text-gray-900">
@@ -181,125 +181,5 @@ export default {
 </template>
 
 <style scoped>
-body {
-  font-family: "Roboto", Helvetica, Arial, "DejaVu Sans", "Liberation Sans",
-  Freesans, sans-serif !important;
-}
-
-
-.container {
-  height: 100vh;
-  background-color: #219653;
-}
-
-
-.max-w-md {
-  height: 460px;
-  width: 350px;
-}
-
-.img {
-  transform: translateX(30%);
-  width: 62%;
-}
-
-
-.txtLogin {
-  font-size: 18px;
-  border-bottom: 1px solid #e5e5e5;
-  font-weight: bold;
-}
-
-.bg-white {
-  border-radius: 4%;
-  width: 350px;
-}
-
-.rounded-md {
-  position: relative;
-}
-
-.rounded-md {
-  position: relative;
-}
-
-
-.forgetpass {
-  position: absolute;
-  right: 12%;
-  top: 70%;
-  transform: translateY(-50%);
-  text-decoration: underline;
-  font-family: "Roboto";
-  size: 14px;
-  z-index: 25;
-}
-
-.eye-icon {
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  z-index: 50;
-  right: 1%;
-  top: 60%;
-}
-
-
-
-.eye {
-  position: absolute;
-  right: 15px;
-  top: 10%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  max-width: 20px;
-  width: 30px;
-  height: 30px;
-  z-index: 30;
-}
-
-.rounded-md label {
-  color: #5c5c5c;
-  font-size: 16px;
-  font-family: "Roboto", Helvetica, Arial, "DejaVu Sans", "Liberation Sans",
-    "Freesans", sans-serif !important;
-}
-
-.rounded-md label {
-  color: #5c5c5c;
-  font-size: 16px;
-  font-family: "Roboto", Helvetica, Arial, "DejaVu Sans", "Liberation Sans",
-  "Freesans", sans-serif !important;
-  left: 4%;
-  font-weight: 600;
-}
-
-.rounded-md input {
-  border-bottom: 1px solid #e8e8e8;
-  background-color: rgb(232, 240, 254)!important;
-
-}
-
-input:focus {
-  border-bottom: 1px solid #069255;
-}
-
-
-.btnLogin {
-  transform: translateX(10%);
-
-}
-
-.btnLogin button {
-  background: #069255;
-}
-
-.btnLogin button:hover {
-  background: #02a45e;
-}
-
-.text-bottom {
-  transform: translateX(11%);
-  bottom: 10px;
-}
+@import "Login.css";
 </style>

@@ -11,9 +11,9 @@
       <div class="grid grid-cols-[2fr_5fr_5fr] mx-[-15px]">
         <div class="flex justify-center">
           <div
-            class="avatar relative w-[148px] h-[148px] rounded-full overflow-hidden"
+            class="avatar relative w-[148px] h-[148px] rounded-full overflow-hidden flex"
           >
-            <img src="https://moshop.com.vn/default-avatar.jpg" alt="avatar" />
+            <img :src=userInfo.avatar alt="avatar" />
             <div
               class="avatar__chooseImage absolute top-[108px] bg-[#f2f3f4] opacity-60 w-[148px] h-[40px]"
             >
@@ -28,7 +28,7 @@
                 />
               </button>
             </div>
-            <input ref="fileInputAvatar" class="hidden" type="file" />
+            <input ref="fileInputAvatar" class="hidden" type="file" @change="changeAvatar" />
           </div>
         </div>
         <div class="px-[15px]">
@@ -141,7 +141,7 @@
 // import {userEmployeeStore} from "../../stores/EmployeeStore";
 // import {mapActions, mapState} from "pinia";
 export default {
-  props: ["isGetData"],
+  props: ["isGetData","editData"],
   data() {
     return {
       isError: false,
@@ -149,6 +149,7 @@ export default {
       isErrorPhone: false,
       isErrorPassword: false,
       userInfo: {
+        avatar: "https://moshop.com.vn/default-avatar.jpg",
         name: "",
         phone: "",
         password: "",
@@ -167,15 +168,24 @@ export default {
       },
     };
   },
+  mounted() {
+    setTimeout(this.bindData,1000)
+  },
   methods: {
-    // checkError(){
-    //   if(this.isErrorName === true && this.isErrorPassword === true && this.isErrorPhone){
-    //     this.isError = true
-    //   }
-    //   console.log(this.isError);
-    // },
+    bindData(){
+      this.userInfo.avatar=this.editData.avatar;
+      this.userInfo.name=this.editData.fullname;
+      this.userInfo.phone=this.editData.tel;
+      this.userInfo.password=this.editData.password;
+      this.userInfo.birthday=this.editData.birthday;
+      this.userInfo.live_address=this.editData.live_address;
+
+    },
     handleClickInputAvatar(e) {
       this.$refs.fileInputAvatar.click();
+    },
+    changeAvatar(e) {
+    this.userInfo.avatar = URL.createObjectURL(e.target.files[0]);
     },
     validateAddNewUser() {
       if (!this.userInfo.name) {

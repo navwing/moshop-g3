@@ -1,23 +1,23 @@
 <template>
   <div class="jobInfor mb-[20px] mr-[15px]">
     <fieldset
-      class="relative pt-[36px] border border-[#ccc] rounded-[10px] py-[18px] px-[30px] pb-[20px] shadow-md"
+        class="relative pt-[36px] border border-[#ccc] rounded-[10px] py-[18px] px-[30px] pb-[20px] shadow-md"
     >
       <legend
-        class="bg-white py-[6px] px-[20px] border border-[#ccc] text-[16px] font-bold"
+          class="bg-white py-[6px] px-[20px] border border-[#ccc] text-[16px] font-bold"
       >
         Thông tin công việc
       </legend>
       <div class="jobInfor__head mb-[28px]">
         <div class="flex items-center mb-[20px]">
           <label class="w-[250px] font-bold" for=""
-            >Ngày bắt đầu làm việc</label
+          >Ngày bắt đầu làm việc</label
           >
           <input
-            v-model="userInfo.work_first_date"
-            class="w-full border border-[#ced4da] py-1 px-2 rounded"
-            type="date"
-            placeholder="Chọn ngày"
+              v-model="userInfo.work_first_date"
+              class="w-full border border-[#ced4da] py-1 px-2 rounded"
+              type="date"
+              placeholder="Chọn ngày"
           />
         </div>
         <div class="flex mb-[20px]">
@@ -26,33 +26,33 @@
           </div>
           <div class="relative w-full">
             <input
-              @click="showScroll"
-              v-model="addressCurrent"
-              class="w-full border border-[#ced4da] py-1 px-2 rounded"
-              type="text"
-              placeholder="Chọn nơi làm việc"
+                @click="showScroll"
+                v-model="addressCurrent"
+                class="w-full border border-[#ced4da] py-1 px-2 rounded"
+                type="text"
+                placeholder="Chọn nơi làm việc"
             />
             <font-awesome-icon
-              v-if="!isIcon"
-              icon="fa-solid fa-angle-down"
-              class="absolute top-2 right-3 opacity-50 cursor-pointer"
+                v-if="!isIcon"
+                icon="fa-solid fa-angle-down"
+                class="absolute top-2 right-3 opacity-50 cursor-pointer"
             />
             <font-awesome-icon
-              v-else
-              icon="fa-solid fa-angle-up"
-              class="absolute top-2 right-3 opacity-50 cursor-pointer"
+                v-else
+                icon="fa-solid fa-angle-up"
+                class="absolute top-2 right-3 opacity-50 cursor-pointer"
             />
             <div
-              @blur="blurAddress"
-              v-if="isShowScroll"
-              class="scrollAddress absolute left-0 w-full h-[300px] overflow-scroll shadow-lg z-10"
+                @blur="blurAddress"
+                v-if="isShowScroll"
+                class="scrollAddress absolute left-0 w-full h-[300px] overflow-scroll shadow-lg z-10"
             >
               <ul>
                 <li
-                  v-for="(address, index) in workingAddress"
-                  :key="index"
-                  @click="selectAddress(address)"
-                  class="p-2 bg-white hover:bg-[#41b883] hover:text-white cursor-pointer"
+                    v-for="(address, index) in workingAddress"
+                    :key="index"
+                    @click="selectAddress(address)"
+                    class="p-2 bg-white hover:bg-[#41b883] hover:text-white cursor-pointer"
                 >
                   {{ address }}
                 </li>
@@ -67,20 +67,20 @@
         </div>
         <div class="workingTime__action">
           <AddTimeWorkingUser
-            v-for="(timeWorking) in listTimeWorking"
-            :key="timeWorking.id"
-            :isShow="isShow"
-            :sendId="timeWorking"
-            :index="timeWorking.id"
-            @delete="deleteTimeWorking"
-            @getDataAddTimeWorking="getDataAddTimeWorking"
-            :isGetData="isGetData"
+              v-for="(timeWorking) in listTimeWorking"
+              :key="timeWorking.id"
+              :isShow="isShow"
+              :sendId="timeWorking"
+              :index="timeWorking.id"
+              @delete="deleteTimeWorking"
+              @getDataAddTimeWorking="getDataAddTimeWorking"
+              :isGetData="isGetData"
           />
           <button
-            @click.prevent="addTimeWorking"
-            class="py-[8px] px-[22px] border border-[#28a745] rounded-md text-[#28a745] hover:bg-[#28a745] hover:text-[#fff] cursor-pointer"
+              @click.prevent="addTimeWorking"
+              class="py-[8px] px-[22px] border border-[#28a745] rounded-md text-[#28a745] hover:bg-[#28a745] hover:text-[#fff] cursor-pointer"
           >
-            <font-awesome-icon icon="fa-solid fa-plus" />
+            <font-awesome-icon icon="fa-solid fa-plus"/>
             Thêm thời gian
           </button>
         </div>
@@ -92,19 +92,21 @@
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
             <input value="sale"
-              @click="addChat"
-              class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
-              type="checkbox"
+                   v-model="listScreen"
+                   class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
+                   type="checkbox"
             />
             <span>Chat chốt đơn</span>
           </label>
-          <ChatToCloseOrders :isShowChat="isShowChat" :isGetData="isGetData" @getCTCO="getCTCO"/>
+          <ChatToCloseOrders :isGetData="isGetData" @getCTCO="getCTCO" v-show="listScreen.includes('sale')"
+                             :editData="editData"/>
         </div>
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
             <input value="chat_ops"
-              class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
-              type="checkbox"
+                   v-model="listScreen"
+                   class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
+                   type="checkbox"
             />
             <span>Chats vận hành</span>
           </label>
@@ -112,8 +114,8 @@
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
             <input v-model="listScreen" value="statistic"
-              class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
-              type="checkbox"
+                   class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
+                   type="checkbox"
             />
             <span>Tổng quan (Tổng quan shop)</span>
           </label>
@@ -121,8 +123,8 @@
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
             <input v-model="listScreen" value="order"
-              class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
-              type="checkbox"
+                   class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
+                   type="checkbox"
             />
             <span>Đơn hàng (Quản lý và đăng đơn GHTK)</span>
           </label>
@@ -130,8 +132,8 @@
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
             <input v-model="listScreen" value="customer"
-              class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
-              type="checkbox"
+                   class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
+                   type="checkbox"
             />
             <span>Khách hàng (Quản lý và chăm sóc KH)</span>
           </label>
@@ -139,8 +141,8 @@
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
             <input v-model="listScreen" value="product"
-              class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
-              type="checkbox"
+                   class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
+                   type="checkbox"
             />
             <span>Kho và sản phẩm (Quản lý sản phẩm và xuất nhập)</span>
           </label>
@@ -148,8 +150,8 @@
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
             <input v-model="listScreen" value="staff"
-              class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
-              type="checkbox"
+                   class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
+                   type="checkbox"
             />
             <span>Nhân viên (Quản lý nhân viên)</span>
           </label>
@@ -159,10 +161,11 @@
   </div>
 </template>
 <script>
-import AddTimeWorkingUser from "./AddTimeWorkingUser.vue";
-import ChatToCloseOrders from "./ChatToCloseOrders.vue";
+import AddTimeWorkingUser from "../AddTimeWorkingUser/AddTimeWorkingUser.vue";
+import ChatToCloseOrders from "../ChatToCloseOrder/ChatToCloseOrders.vue";
+
 export default {
-  props: ["workingAddress", "isGetData"],
+  props: ["workingAddress", "isGetData", "editData"],
   components: {
     AddTimeWorkingUser,
     ChatToCloseOrders,
@@ -179,13 +182,18 @@ export default {
       listScreen: [],
       isShow: false,
       isShowScroll: false,
-      isShowChat: false,
       addressCurrent: "",
-
       listRepeatDateUp: []
     };
   },
+  mounted() {
+    setTimeout(this.bindData, 1000)
+  },
   methods: {
+    bindData() {
+      this.userInfo.work_first_date = this.editData.work_first_date;
+      this.listScreen = this.editData.screens
+    },
     addTimeWorking() {
       this.isShow = true;
       if (this.isShow) {
@@ -196,11 +204,11 @@ export default {
       }
     },
     deleteTimeWorking(id) {
-      console.log(id, this.listTimeWorking)
+
       const index = this.listTimeWorking?.findIndex(work => work.id == id)
-      console.log(index)
+
       this.listTimeWorking.splice(index, 1);
-      
+
     },
     showScroll() {
       this.isShowScroll = !this.isShowScroll;
@@ -210,18 +218,15 @@ export default {
       this.addressCurrent = address;
       this.showScroll();
     },
-    addChat() {
-      this.isShowChat = !this.isShowChat;
-    },
+
     getDataAddTimeWorking(data) {
       this.listRepeatDateUp.push(data)
-      // console.log(this.listRepeatDateUp)
-      console.log(this.listRepeatDateUp)
+
       this.$emit("getDATW", data);
     },
-    getCTCO(data){
+    getCTCO(data) {
       this.$emit("getCTCO", data)
-      console.log(data)
+
     }
   },
   watch: {
@@ -232,7 +237,7 @@ export default {
         listScreen: this.listScreen
       };
       this.$emit("getDataAddJobInfo", data);
-      
+
       // this.$emit("getDataScreen", )
     },
   },
@@ -243,6 +248,7 @@ export default {
   width: 6px;
   background-color: white;
 }
+
 .scrollAddress::-webkit-scrollbar-thumb {
   width: 6px;
   height: 50px;

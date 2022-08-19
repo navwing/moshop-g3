@@ -1,7 +1,7 @@
 <template>
   <div v-show="isShow" class="workingTime__box mb-[15px]">
     <div class="workingTimeItem relative mb-[20px] flex items-center">
-      <div class="workingTimeItem__index mr-[5px]">{{ index + 1 }}.</div>
+      <div class="workingTimeItem__index mr-[5px]">{{ index }}.</div>
       <div class="workingTimeItem__fromTitle mr-[20px]">Từ</div>
       <div class="workingTimeItem__input relative">
         <input
@@ -10,10 +10,7 @@
           type="time"
           placeholder="Chọn thời gian"
         />
-        <font-awesome-icon
-          icon="fa-solid fa-clock"
-          class="absolute top-3 right-2 opacity-50"
-        />
+
       </div>
       <div class="workingTimeItem__toTitle mx-[20px]">đến</div>
       <div class="workingTimeItem__input relative">
@@ -23,10 +20,7 @@
           type="time"
           placeholder="Chọn thời gian"
         />
-        <font-awesome-icon
-          icon="fa-solid fa-clock"
-          class="absolute top-3 right-2 opacity-50"
-        />
+
       </div>
       <div
         @click="deleteTimeWorking(index)"
@@ -89,18 +83,15 @@ export default {
   },
   methods: {
     deleteTimeWorking(index) {
-      console.log('xoa lan 1')
       this.$emit("delete", index);
     },
     checkRepeatDate(value){
-      console.log("hello");
       if (this.listRepeatDate.includes(value)) {
         let b = this.listRepeatDate.filter(e => e === value);
         b.forEach(f => this.listRepeatDate.splice(this.listRepeatDate.findIndex(e => e === f),1));
       } else {
         this.listRepeatDate.push(value)
       }
-      console.log(this.listRepeatDate)
     }
   },
   watch: {
@@ -110,7 +101,6 @@ export default {
         end_time: this.userInfo.end_time,
         listRepeatDate: this.listRepeatDate
       }
-      // console.log(this.isGetData);
       this.$emit("getDataAddTimeWorking", data);
       
     },

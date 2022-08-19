@@ -44,7 +44,6 @@ export default {
     methods: {
       closeBtn(e){
         this.$emit('closeBtn', this.isShowSuccessAll)
-  // console.log(this.isShowSuccessAll)
       }
     }
 };
