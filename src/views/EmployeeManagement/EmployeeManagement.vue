@@ -93,7 +93,6 @@
                 </div>
               </div>
             </div>
-
           </th>
           <th class="font-semibold ">
             <div class="table-header">
