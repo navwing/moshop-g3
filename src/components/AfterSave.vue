@@ -3,8 +3,8 @@
     <div class="w-[500px] rounded-[4px]">
       <div class="relative bg-[#069255] text-[#fff] flex justify-center items-center font-bold py-3">
         Xác nhận đăng ký
-        <button class="absolute right-3">
-          <font-awesome-icon icon="fa-solid fa-xmark" />
+        <button @click="closeBtn" class="absolute right-3">
+          <font-awesome-icon icon="fa-solid fa-xmark"/>
         </button>
       </div>
       <div class="bg-white text-black p-3">
@@ -38,9 +38,15 @@
 <script>
 export default {
     props: [
-        'isShowSuccessAll',
-        'isShowErrorAll'
-    ]
+      'isShowSuccessAll',
+      'isShowErrorAll'
+    ],
+    methods: {
+      closeBtn(e){
+        this.$emit('closeBtn', this.isShowSuccessAll)
+  // console.log(this.isShowSuccessAll)
+      }
+    }
 };
 </script>
 <style>

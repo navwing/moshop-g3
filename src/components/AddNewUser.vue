@@ -1,5 +1,4 @@
 <template>
-  <!-- <form @submit.prevent="save()" class="mb-[20px]"> -->
   <form class="mb-[20px]">
     <fieldset
       class="relative border border-[#ccc] rounded-[10px] py-[18px] px-[30px] pb-[20px] shadow-md"
@@ -44,7 +43,7 @@
                   'is-invalid': errors.name,
                   'is-success': success.name,
                 }"
-                @blur="validate()"
+                @blur="validateAddNewUser()"
                 class="w-full border border-[#ced4da] color-[#495057] py-1 px-2 rounded"
                 type="text"
               />
@@ -67,7 +66,7 @@
                   'is-invalid': errors.phone,
                   'is-success': success.phone,
                 }"
-                @blur="validate()"
+                @blur="validateAddNewUser()"
                 class="w-full border border-[#ced4da] color-[#495057] py-1 px-2 rounded"
                 type="tel"
               />
@@ -79,14 +78,18 @@
               {{ errors.phone }}
             </div>
           </div>
-          <div class="flex items-center mb-[20px]">
-            <label class="w-[180px] font-bold" for="" placeholder="Chọn ngày">
-              Ngày sinh
-            </label>
-            <input
-              class="w-full border border-[#ced4da] color-[#495057] py-1 px-2 rounded"
-              type="date"
-            />
+          <div class="mb-[20px]">
+            <div class="flex items-center">
+              <label class="w-[180px] font-bold" for="" placeholder="Chọn ngày">
+                Ngày sinh
+              </label>
+              <input
+                v-model="userInfo.birthday"
+                @blur="validateAddNewUser()"
+                class="w-full border border-[#ced4da] color-[#495057] py-1 px-2 rounded"
+                type="date"
+              />
+            </div>
           </div>
         </div>
         <div class="px-[15px]">
@@ -101,7 +104,7 @@
                   'is-invalid': errors.password,
                   'is-success': success.password,
                 }"
-                @blur="validate()"
+                @blur="validateAddNewUser()"
                 class="w-full border border-[#ced4da] color-[#495057] py-1 px-2 rounded"
                 type="password"
                 placeholder="Mật khẩu phải có ít nhất 6 ký tự"
@@ -122,7 +125,9 @@
             <label class="w-[160px] font-bold" for="" placeholder="Chọn ngày">
               Địa chỉ
             </label>
-            <input
+            <input 
+              v-model="userInfo.live_address"
+              @blur="validateAddNewUser()"
               class="w-full border border-[#ced4da] color-[#495057] py-1 px-2 rounded"
               type="text"
             />
@@ -133,14 +138,22 @@
   </form>
 </template>
 <script>
+// import {userEmployeeStore} from "../../stores/EmployeeStore";
+// import {mapActions, mapState} from "pinia";
 export default {
   props: ["isGetData"],
   data() {
     return {
+      isError: false,
+      isErrorName: false,
+      isErrorPhone: false,
+      isErrorPassword: false,
       userInfo: {
         name: "",
         phone: "",
         password: "",
+        birthday: "",
+        live_address: ""
       },
       errors: {
         name: "",
@@ -155,10 +168,16 @@ export default {
     };
   },
   methods: {
+    // checkError(){
+    //   if(this.isErrorName === true && this.isErrorPassword === true && this.isErrorPhone){
+    //     this.isError = true
+    //   }
+    //   console.log(this.isError);
+    // },
     handleClickInputAvatar(e) {
       this.$refs.fileInputAvatar.click();
     },
-    validate() {
+    validateAddNewUser() {
       if (!this.userInfo.name) {
         this.errors.name = "Tên là bắt buộc";
         this.success.name = "";
@@ -171,6 +190,7 @@ export default {
       } else {
         this.success.name = "Ký tự hợp lệ";
         this.errors.name = "";
+        this.isErrorName = true;
       }
       if (!this.userInfo.phone) {
         this.errors.phone = "Số điện thoại là bắt buộc";
@@ -187,6 +207,7 @@ export default {
       } else {
         this.success.phone = "Ký tự hợp lệ";
         this.errors.phone = "";
+        this.isErrorPhone = true;
       }
       if (!this.userInfo.password) {
         this.errors.password = "Mật khẩu là bắt buộc";
@@ -197,20 +218,24 @@ export default {
       } else {
         this.success.password = "Ký tự hợp lệ";
         this.errors.password = "";
+        this.isErrorPassword = true;
       }
     },
     isNumber(value) {
       return /^\d+$/.test(value);
     },
-    save() {
-      this.validate();
-      console.log(this.userInfo.password.length);
-    },
   },
   watch: {
     isGetData() {
-      console.log('xoa o day a');
-      this.$emit('getDataAddNew', this.userInfo)
+      const data = {
+        ...this.userInfo,
+        isErrorName: this.isErrorName,
+        isErrorPhone: this.isErrorPhone,
+        isErrorPassword: this.isErrorPassword,
+      };
+      this.$emit("getDataAddNew", data);
+      // this.$emit('checkError', this.isErrorName,this.isErrorPhone,
+      // this.isErrorPassword)
     },
   },
 };

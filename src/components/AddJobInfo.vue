@@ -14,6 +14,7 @@
             >Ngày bắt đầu làm việc</label
           >
           <input
+            v-model="userInfo.work_first_date"
             class="w-full border border-[#ced4da] py-1 px-2 rounded"
             type="date"
             placeholder="Chọn ngày"
@@ -32,7 +33,13 @@
               placeholder="Chọn nơi làm việc"
             />
             <font-awesome-icon
+              v-if="!isIcon"
               icon="fa-solid fa-angle-down"
+              class="absolute top-2 right-3 opacity-50 cursor-pointer"
+            />
+            <font-awesome-icon
+              v-else
+              icon="fa-solid fa-angle-up"
               class="absolute top-2 right-3 opacity-50 cursor-pointer"
             />
             <div
@@ -60,12 +67,14 @@
         </div>
         <div class="workingTime__action">
           <AddTimeWorkingUser
-            v-for="(timeWorking, index) in listTimeWorking"
-            :key="index"
+            v-for="(timeWorking) in listTimeWorking"
+            :key="timeWorking.id"
             :isShow="isShow"
             :sendId="timeWorking"
-            :index="index"
+            :index="timeWorking.id"
             @delete="deleteTimeWorking"
+            @getDataAddTimeWorking="getDataAddTimeWorking"
+            :isGetData="isGetData"
           />
           <button
             @click.prevent="addTimeWorking"
@@ -82,18 +91,18 @@
         </div>
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
-            <input
+            <input value="sale"
               @click="addChat"
               class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
               type="checkbox"
             />
             <span>Chat chốt đơn</span>
           </label>
-          <ChatToCloseOrders :isShowChat="isShowChat" />
+          <ChatToCloseOrders :isShowChat="isShowChat" :isGetData="isGetData" @getCTCO="getCTCO"/>
         </div>
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
-            <input
+            <input value="chat_ops"
               class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
               type="checkbox"
             />
@@ -102,7 +111,7 @@
         </div>
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
-            <input
+            <input v-model="listScreen" value="statistic"
               class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
               type="checkbox"
             />
@@ -111,7 +120,7 @@
         </div>
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
-            <input
+            <input v-model="listScreen" value="order"
               class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
               type="checkbox"
             />
@@ -120,7 +129,7 @@
         </div>
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
-            <input
+            <input v-model="listScreen" value="customer"
               class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
               type="checkbox"
             />
@@ -129,7 +138,7 @@
         </div>
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
-            <input
+            <input v-model="listScreen" value="product"
               class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
               type="checkbox"
             />
@@ -138,7 +147,7 @@
         </div>
         <div class="mb-[10px]">
           <label class="inline-flex items-center cursor-pointer" for="">
-            <input
+            <input v-model="listScreen" value="staff"
               class="h-[24px] w-[24px] border-[#069255] rounded-[5px] checked:bg-green-700 mr-[10px]"
               type="checkbox"
             />
@@ -153,18 +162,27 @@
 import AddTimeWorkingUser from "./AddTimeWorkingUser.vue";
 import ChatToCloseOrders from "./ChatToCloseOrders.vue";
 export default {
-  props: ["workingAddress"],
+  props: ["workingAddress", "isGetData"],
   components: {
     AddTimeWorkingUser,
     ChatToCloseOrders,
   },
   data() {
     return {
+      userInfo: {
+        work_first_date: "",
+        work_address: "",
+      },
+      isIcon: false,
       listTimeWorking: [],
+      listPage: [],
+      listScreen: [],
       isShow: false,
       isShowScroll: false,
       isShowChat: false,
       addressCurrent: "",
+
+      listRepeatDateUp: []
     };
   },
   methods: {
@@ -177,17 +195,45 @@ export default {
         });
       }
     },
-    deleteTimeWorking(index) {
+    deleteTimeWorking(id) {
+      console.log(id, this.listTimeWorking)
+      const index = this.listTimeWorking?.findIndex(work => work.id == id)
+      console.log(index)
       this.listTimeWorking.splice(index, 1);
+      
     },
     showScroll() {
       this.isShowScroll = !this.isShowScroll;
+      this.isIcon = !this.isIcon;
     },
     selectAddress(address) {
       this.addressCurrent = address;
+      this.showScroll();
     },
     addChat() {
       this.isShowChat = !this.isShowChat;
+    },
+    getDataAddTimeWorking(data) {
+      this.listRepeatDateUp.push(data)
+      // console.log(this.listRepeatDateUp)
+      console.log(this.listRepeatDateUp)
+      this.$emit("getDATW", data);
+    },
+    getCTCO(data){
+      this.$emit("getCTCO", data)
+      console.log(data)
+    }
+  },
+  watch: {
+    isGetData() {
+      const data = {
+        ...this.userInfo,
+        addressCurrent: this.addressCurrent,
+        listScreen: this.listScreen
+      };
+      this.$emit("getDataAddJobInfo", data);
+      
+      // this.$emit("getDataScreen", )
     },
   },
 };

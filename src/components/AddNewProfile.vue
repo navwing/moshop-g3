@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="profile">
-          <div class="profile__title font-bold mb-[5px]">Sơ yếu lý lịch</div>
+          <div class="profile__title font-bold mb-[5px]">Hồ sơ</div>
           <div class="profile__image flex justify-start mb-[35px] ml-3">
             <label class="w-[80px] h-[80px] border border-dashed border-[#aaa] rounded-xl text-center flex flex-col justify-center text-[#069255] hover:text-[#fff] hover:bg-[#069255] cursor-pointer" for="">
               <button @click.prevent="handleClickInputImage">
