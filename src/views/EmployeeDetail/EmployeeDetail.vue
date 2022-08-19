@@ -1,5 +1,10 @@
 <template>
   <NavBar />
+  <SettingFilter
+    v-show="openSettingFilter"
+    @closeFilter="closeSettingFilter"
+    @changeMethod="changeMethod"
+  />
   <div class="main">
     <div class="staffdetail-part">
       <div class="staffdetail-top">
@@ -40,26 +45,26 @@
                 <div class="dropdown__status absolute" v-show="openDropDown">
                   <div
                     class="dropdown__status__item"
-                    @click="changeEmployeeStatus('active')"
+                    @click="updateStaffStatus(1)"
                   >
                     <div class="dropdown__status__item--active">
                       <img
                         src="https://moshop.com.vn/_nuxt/img/check-circle-green.af1a7f4.svg"
                         alt="statusCheck"
-                        v-if="employeeStatus === 'active'"
+                        v-if="employeeStatus === 1"
                       />
                     </div>
                     <div class="text">Đang làm việc</div>
                   </div>
                   <div
                     class="dropdown__status__item"
-                    @click="changeEmployeeStatus('temporaryBreak')"
+                    @click="updateStaffStatus(2)"
                   >
                     <div class="dropdown__status__item--active">
                       <img
                         src="https://moshop.com.vn/_nuxt/img/check-circle-green.af1a7f4.svg"
                         alt="statusCheck"
-                        v-if="employeeStatus === 'temporaryBreak'"
+                        v-if="employeeStatus === 2"
                       />
                     </div>
                     <div class="text">Nghỉ tạm thời</div>
@@ -67,13 +72,13 @@
                   <div
                     class="dropdown__status__item"
                     style="margin-bottom: 0px"
-                    @click="changeEmployeeStatus('retired')"
+                    @click="updateStaffStatus(0)"
                   >
                     <div class="dropdown__status__item--active">
                       <img
                         src="https://moshop.com.vn/_nuxt/img/check-circle-green.af1a7f4.svg"
                         alt="statusCheck"
-                        v-if="employeeStatus === 'retired'"
+                        v-if="employeeStatus === 0"
                       />
                     </div>
                     <div class="text">Đã nghỉ việc</div>
@@ -84,21 +89,49 @@
           </div>
         </div>
         <div class="top-action">
-          <router-link :to="{path:'/edit/'+shopUserDetail.id}" class="btn-editstaff flex items-center justify-center">Sửa</router-link>
+          <router-link
+            :to="{ path: '/edit/' + shopUserDetail.id }"
+            class="btn-editstaff flex items-center justify-center"
+            >Sửa</router-link
+          >
         </div>
       </div>
       <!--StaffDetail-top-end-->
       <div class="staffdetail-middle">
         <div class="middle-main">
-          <form>
+          <div>
             <fieldset>
               <legend>Kết quả công việc</legend>
               <div class="middle-fillterBox">
-                <div class="fillterBox">
-                  <button>Hôm nay</button>
-                  <button>Tuần này</button>
-                  <button>Tháng này</button>
-                  <button>Tùy chọn</button>
+                <div class="filter">
+                  <button
+                    class="filter-btn"
+                    :class="renderType === 'today' ? 'active' : ''"
+                    @click="changeRenderDate('today')"
+                  >
+                    Hôm nay
+                  </button>
+                  <button
+                    class="filter-btn"
+                    :class="renderType === 'thisWeek' ? 'active' : ''"
+                    @click="changeRenderDate('thisWeek')"
+                  >
+                    Tuần này
+                  </button>
+                  <button
+                    class="filter-btn"
+                    :class="renderType === 'thisMonth' ? 'active' : ''"
+                    @click="changeRenderDate('thisMonth')"
+                  >
+                    Tháng này
+                  </button>
+                  <button
+                    class="filter-btn"
+                    @click="changeRenderDate('custom')"
+                    :class="renderType === 'custom' ? 'active' : ''"
+                  >
+                    Tùy chọn
+                  </button>
                 </div>
               </div>
               <div class="middle-table">
@@ -134,9 +167,7 @@
                 </table>
               </div>
             </fieldset>
-          </form>
-          <div></div>
-          <div></div>
+          </div>  
         </div>
         <div></div>
       </div>
@@ -172,75 +203,51 @@
                   <div class="working-time-title">Thời gian làm việc</div>
                   <div class="working-time-item">
                     <div
-                      class="workingTimeItem relative mb-[20px] flex items-center"
+                      class="workingTimeItem relative mb-[20px] items-center"
                       v-for="(time, index) in shopUserDetail.work_time_repeats"
                       :key="index"
                     >
                       <div class="workingTimeItem__index mr-[5px]">
                         <!-- {{ index + 1 }}. -->
                       </div>
-                      <div class="workingTimeItem__fromTitle mr-[20px]">Từ</div>
-                      <div class="workingTimeItem__input relative">
-                        <input
-                          class="w-[175px] border border-[#ced4da] rounded-[4px]"
-                          type="text"
-                          disabled="disable"
-                          :value="time.start_time"
-                        />
-                        <font-awesome-icon
-                          icon="fa-regular fa-clock"
-                          class="absolute top-3 right-2 opacity-50"
-                        />
+                      <div class="flex">
+                        <div class="workingTimeItem__input relative">
+                          Từ
+                          <input
+                            class="w-[175px] border border-[#ced4da] rounded-[4px]"
+                            type="text"
+                            disabled="disable"
+                            :value="time.start_time"
+                          />
+                          <font-awesome-icon
+                            icon="fa-regular fa-clock"
+                            class="absolute top-3 right-2 opacity-50"
+                          />
+                        </div>
+                        <div class="workingTimeItem__input relative">
+                          Đến
+                          <input
+                            class="w-[175px] border border-[#ced4da] rounded-[4px]"
+                            type="text"
+                            disabled="disable"
+                            :value="time.end_time"
+                          />
+                          <font-awesome-icon
+                            icon="fa-regular fa-clock"
+                            class="absolute top-3 right-2 opacity-50"
+                          />
+                        </div>
                       </div>
-                      <div class="workingTimeItem__toTitle mx-[20px]">đến</div>
-                      <div class="workingTimeItem__input relative">
-                        <input
-                          class="w-[175px] border border-[#ced4da] rounded-[4px]"
-                          type="text"
-                          disabled="disable"
-                          :value="time.end_time"
-                        />
-                        <font-awesome-icon
-                          icon="fa-regular fa-clock"
-                          class="absolute top-3 right-2 opacity-50"
-                        />
-                      </div>
-                    </div>
-                    <div class="workingTimeDay flex">
-                      <div
-                        class="workingTimeDay__item py-[2px] px-[8px] border border-[#069255] rounded-[20px] mr-[10px] mb-[5px] hover:bg-[#069255] hover:text-[#fff] cursor-pointer"
-                      >
-                        Thứ 2
-                      </div>
-                      <div
-                        class="workingTimeDay__item py-[2px] px-[8px] border border-[#069255] rounded-[20px] mr-[10px] mb-[5px] hover:bg-[#069255] hover:text-[#fff] cursor-pointer"
-                      >
-                        Thứ 3
-                      </div>
-                      <div
-                        class="workingTimeDay__item py-[2px] px-[8px] border border-[#069255] rounded-[20px] mr-[10px] mb-[5px] hover:bg-[#069255] hover:text-[#fff] cursor-pointer"
-                      >
-                        Thứ 4
-                      </div>
-                      <div
-                        class="workingTimeDay__item py-[2px] px-[8px] border border-[#069255] rounded-[20px] mr-[10px] mb-[5px] hover:bg-[#069255] hover:text-[#fff] cursor-pointer"
-                      >
-                        Thứ 5
-                      </div>
-                      <div
-                        class="workingTimeDay__item py-[2px] px-[8px] border border-[#069255] rounded-[20px] mr-[10px] mb-[5px] hover:bg-[#069255] hover:text-[#fff] cursor-pointer"
-                      >
-                        Thứ 6
-                      </div>
-                      <div
-                        class="workingTimeDay__item py-[2px] px-[8px] border border-[#069255] rounded-[20px] mr-[10px] mb-[5px] hover:bg-[#069255] hover:text-[#fff] cursor-pointer"
-                      >
-                        Thứ 7
-                      </div>
-                      <div
-                        class="workingTimeDay__item py-[2px] px-[8px] border border-[#069255] rounded-[20px] mr-[10px] mb-[5px] hover:bg-[#069255] hover:text-[#fff] cursor-pointer"
-                      >
-                        Chủ nhật
+
+                      <div class="workingTimeDay flex">
+                        <div v-for="d in dateofweek">
+                          <div
+                            class="workingTimeDay__item py-[2px] px-[8px] border border-[#069255] rounded-[20px] mr-[10px] mb-[5px] cursor-pointer text-white"
+                            :class="{ isactive: time.repeats.includes(d) }"
+                          >
+                            {{ showDay(d) }}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -249,37 +256,69 @@
                   <div class="page-title">Màn hình được sử dụng</div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
-                      <input class="page-checkbox" type="checkbox" />
-                      <span class="custom-checkmark"  @click="showPage = !showPage"></span>
+                      <input
+                        class="page-checkbox"
+                        type="checkbox"
+                        disabled
+                        :checked="
+                          shopUserDetail?.screens?.includes('sale')
+                            ? true
+                            : false
+                        "
+                      />
+                      <!-- @click="showPage = !showPage" -->
+                      <span class="custom-checkmark"></span>
                       <span class="customcheckbox-span">Chats chốt đơn</span>
                     </label>
-                    <div class="pageBox" v-show="showPage">
+                    <div
+                      class="pageBox"
+                      v-show="showPage"
+                      v-for="item of list_pages"
+                    >
                       <label class="checkbox-container items-center">
                         <input
                           class="page-checkbox"
                           type="checkbox"
                           disabled="disabled"
+                          :checked="item.noti_mode ? true : false"
                         />
                         <span class="custom-checkmark"></span>
                         <img
                           class="rounded-full mr-2"
-                          src="https://scontent-hkt1-2.xx.fbcdn.net/v/t1.6435-1/115988338_101546078327729_390394737921795991_n.jpg?stp=c0.0.160.160a_dst-jpg_p160x160&_nc_cat=108&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=0k-k3TFs3HUAX9nUqp5&_nc_oc=AQmBBWyhwmmQwwZSJ_s_piyfJa279CWieuD0zW3cwvyzjoYqgIYSZdJDxTzhwmrnI7M&_nc_ht=scontent-hkt1-2.xx&edm=AOf6bZoEAAAA&oh=00_AT_7trEDxmbJ5mvxl4a_Bi78mkzeDEPoLxLx1cmIvmzWEA&oe=632172AD"
+                          v-bind:src="item.avatar"
                         />
-                        <span>Test Moshop app</span>
+                        <span class="screen_name">{{ item.name }}</span>
                       </label>
                     </div>
-                    
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
-                      <input class="page-checkbox" type="checkbox" />
+                      <input
+                        class="page-checkbox"
+                        type="checkbox"
+                        disabled="disabled"
+                        :checked="
+                          shopUserDetail?.screens?.includes('chat_ops')
+                            ? true
+                            : false
+                        "
+                      />
                       <span class="custom-checkmark"></span>
                       <span class="customcheckbox-span">Chats vận hành</span>
                     </label>
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
-                      <input class="page-checkbox" type="checkbox" />
+                      <input
+                        class="page-checkbox"
+                        type="checkbox"
+                        disabled="disabled"
+                        :checked="
+                          shopUserDetail?.screens?.includes('statistic')
+                            ? true
+                            : false
+                        "
+                      />
                       <span class="custom-checkmark"></span>
                       <span class="customcheckbox-span"
                         >Tổng quan(Tổng quan shop)</span
@@ -288,7 +327,16 @@
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
-                      <input class="page-checkbox" type="checkbox" />
+                      <input
+                        class="page-checkbox"
+                        type="checkbox"
+                        disabled="disabled"
+                        :checked="
+                          shopUserDetail?.screens?.includes('order')
+                            ? true
+                            : false
+                        "
+                      />
                       <span class="custom-checkmark"></span>
                       <span class="customcheckbox-span"
                         >Đơn hàng(Quản lý và đăng đơn GHTK)</span
@@ -297,7 +345,16 @@
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
-                      <input class="page-checkbox" type="checkbox" />
+                      <input
+                        class="page-checkbox"
+                        type="checkbox"
+                        disabled="disabled"
+                        :checked="
+                          shopUserDetail?.screens?.includes('customer')
+                            ? true
+                            : false
+                        "
+                      />
                       <span class="custom-checkmark"></span>
                       <span class="customcheckbox-span"
                         >Khách hàng(Quản lý và chăm sóc KH)</span
@@ -306,7 +363,16 @@
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
-                      <input class="page-checkbox" type="checkbox" />
+                      <input
+                        class="page-checkbox"
+                        type="checkbox"
+                        disabled="disabled"
+                        :checked="
+                          shopUserDetail?.screens?.includes('product')
+                            ? true
+                            : false
+                        "
+                      />
                       <span class="custom-checkmark"></span>
                       <span class="customcheckbox-span"
                         >Kho sản phẩm(Quản lý sản phẩm và xuất nhập)</span
@@ -315,7 +381,16 @@
                   </div>
                   <div class="screenBox">
                     <label class="checkbox-container items-center">
-                      <input class="page-checkbox" type="checkbox" />
+                      <input
+                        class="page-checkbox"
+                        type="checkbox"
+                        disabled="disabled"
+                        :checked="
+                          shopUserDetail?.screens?.includes('staff')
+                            ? true
+                            : false
+                        "
+                      />
                       <span class="custom-checkmark"></span>
                       <span class="customcheckbox-span"
                         >Nhân viên(Quản lý nhân viên )</span
@@ -331,25 +406,61 @@
               <fieldset>
                 <legend>Lịch sử hoạt động</legend>
                 <div class="bottom-fillterBox">
-                  <div class="fillterBox">
-                    <button>Hôm nay</button>
-                    <button>Tuần này</button>
-                    <button>Tháng này</button>
-                    <button>Tùy chọn</button>
+                  <div class="filter" style="left: 4%; padding-top: 4%">
+                    <button
+                      class="filter-btn"
+                      :class="renderType2 === 'today' ? 'active' : ''"
+                      @click="changeRenderDate2('today')"
+                    >
+                      Hôm nay
+                    </button>
+                    <button
+                      class="filter-btn"
+                      :class="renderType2 === 'thisWeek' ? 'active' : ''"
+                      @click="changeRenderDate2('thisWeek')"
+                    >
+                      Tuần này
+                    </button>
+                    <button
+                      class="filter-btn"
+                      :class="renderType2 === 'thisMonth' ? 'active' : ''"
+                      @click="changeRenderDate2('thisMonth')"
+                    >
+                      Tháng này
+                    </button>
+                    <button
+                      class="filter-btn"
+                      @click="changeRenderDate2('custom')"
+                      :class="renderType2 === 'custom' ? 'active' : ''"
+                    >
+                      Tùy chọn
+                    </button>
                   </div>
                 </div>
                 <div class="logList">
-                  <div class="logList-perDay">
+                  <div
+                    class="logList-perDay"
+                    v-for="date in arrayDate[0]"
+                    :key="date"
+                  >
+                    <p class="date font-bold text-black text-base">
+                      {{ countDate(date) }} - {{ showDate(date) }}
+                    </p>
                     <div
                       class="activity"
                       v-for="(act, id) in history_action"
                       :key="id"
                     >
-                      <div class="activity-time">
-                        {{ act.time }}
-                      </div>
-                      <div class="activity-content">
-                        {{ act.description }}
+                      <div
+                        class="activity-time-cont px-2 flex justify-between items-center w-4/5"
+                        v-if="act.time.slice(0, 10) == date"
+                      >
+                        <div class="activity-time">
+                          {{ act.time }}
+                        </div>
+                        <div class="activity-content">
+                          {{ act.description }}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -366,11 +477,24 @@
 <script>
 import axios from "axios";
 import NavBar from "../../components/NavBar.vue";
+import {
+  startOfDay,
+  endOfDay,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  formatDistanceToNow,
+  format,
+} from "date-fns";
+import viLocale from "date-fns/locale/vi";
+import SettingFilter from "../../components/SettingFilter/SettingFilter.vue";
+import { mapActions } from "pinia";
+import { useStaffStore } from "../../stores/StaffStore";
 
 export default {
   name: "Employee",
-  components: { NavBar },
-  // props: ['id'],
+  components: { NavBar, SettingFilter },
   data() {
     return {
       openDropDown: false,
@@ -379,21 +503,52 @@ export default {
       work_address: [],
       work_results: {},
       history_action: [],
-      showPage: false,
+      arrayAllDate: [],
+      arrayDate: [],
+      showPage: true,
+      list_pages: [],
+      dateofweek: [0, 1, 2, 3, 4, 5, 6],
+      renderType: "today",
+      renderType2: "today",
+      startDay: format(startOfDay(new Date()), "yyyy-MM-dd"),
+      endDay: format(endOfDay(new Date()), "yyyy-MM-dd"),
+      openSettingFilter: false,
     };
   },
   computed: {
     employeeStatusText() {
-      if (this.employeeStatus === "active") {
+      if (this.employeeStatus === 1) {
         return "Đang làm việc";
-      } else if (this.employeeStatus === "temporaryBreak") {
+      } else if (this.employeeStatus === 2) {
         return "Nghỉ tạm thời";
-      } else if (this.employeeStatus === "retired") {
+      } else if (this.employeeStatus === 0) {
         return "Đã nghỉ việc";
       }
     },
   },
   methods: {
+    ...mapActions(useStaffStore, ["changeDateGet"]),
+
+    showDay(day) {
+      switch (day) {
+        case 0:
+          return " Thứ 2";
+        case 1:
+          return " Thứ 3";
+        case 2:
+          return " Thứ 4";
+        case 3:
+          return " Thứ 5";
+        case 4:
+          return " Thứ 6";
+        case 5:
+          return " Thứ 7";
+        case 6:
+          return " Chủ nhật";
+        default:
+          return "err";
+      }
+    },
     changeEmployeeStatus(status) {
       this.openDropDown = !this.openDropDown;
       this.employeeStatus = status;
@@ -401,7 +556,103 @@ export default {
     log(message) {
       console.log(message);
     },
+    countDate(day) {
+      return formatDistanceToNow(new Date(day), {
+        locale: viLocale,
+        addSuffix: true,
+      });
+    },
+    showDate(day) {
+      return format(new Date(day), "PPPP", { locale: viLocale });
+    },
+    //xu ly fillterdate
+    changeRenderDate2(method) {
+      if (method === "today") {
+        this.renderType2 = method;
+        this.startDay = format(startOfDay(new Date()), "yyyy-MM-dd");
+        this.endDay = format(endOfDay(new Date()), "yyyy-MM-dd");
+        this.changeDateGet(this.startDay, this.endDay);
+      }
+      if (method === "thisWeek") {
+        this.renderType2 = method;
+        this.startDay = format(startOfWeek(new Date()), "yyyy-MM-dd");
+        this.endDay = format(endOfWeek(new Date()), "yyyy-MM-dd");
+        this.changeDateGet(this.startDay, this.endDay);
+      }
+      if (method === "thisMonth") {
+        this.renderType2 = method;
+        this.startDay = format(startOfMonth(new Date()), "yyyy-MM-dd");
+        this.endDay = format(endOfMonth(new Date()), "yyyy-MM-dd");
+        this.changeDateGet(this.startDay, this.endDay);
+      }
+      if (method === "custom") {
+        this.openSettingFilter = !this.openSettingFilter;
+      }
+    },
+
+    changeRenderDate(method) {
+      if (method === "today") {
+        this.renderType = method;
+        this.startDay = format(startOfDay(new Date()), "yyyy-MM-dd");
+        this.endDay = format(endOfDay(new Date()), "yyyy-MM-dd");
+        this.changeDateGet(this.startDay, this.endDay);
+      }
+      if (method === "thisWeek") {
+        this.renderType = method;
+        this.startDay = format(startOfWeek(new Date()), "yyyy-MM-dd");
+        this.endDay = format(endOfWeek(new Date()), "yyyy-MM-dd");
+        this.changeDateGet(this.startDay, this.endDay);
+      }
+      if (method === "thisMonth") {
+        this.renderType = method;
+        this.startDay = format(startOfMonth(new Date()), "yyyy-MM-dd");
+        this.endDay = format(endOfMonth(new Date()), "yyyy-MM-dd");
+        this.changeDateGet(this.startDay, this.endDay);
+      }
+      if (method === "custom") {
+        this.openSettingFilter = !this.openSettingFilter;
+      }
+    },
+    changeMethod() {
+      this.renderType = "custom";
+      this.renderType2 = "custom";
+    },
+    closeModal() {
+      this.openKpiModal = false;
+    },
+    closeSettingFilter() {
+      this.openSettingFilter = false;
+    },
+ 
+ // call api Thay doi trang thai nv
+    async updateStaffStatus(a) {
+      try {
+        const res = await axios.post(
+          "https://x.ghtk.vn/api/v2/staff/set-status",
+          {
+            shop_user_id: this.$route.params.id,
+            status: a,
+          },
+          {
+            headers: {
+              authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
+          }
+
+        );
+        console.log(res)
+        this.$toast.show("Thay đổi trạng thái nhân viên thành công", {
+          type: "success",
+        });
+      } catch (e) {
+        console.log(e);
+         this.$toast.show("Có lỗi xảy ra", {
+          type: "error",
+        });
+      }
+    },
   },
+
   mounted() {
     console.log(this.$route.params.id);
     // call api chi tiet thong tin nhan vien
@@ -418,7 +669,8 @@ export default {
       .then((res) => {
         console.log(res);
         this.shopUserDetail = res.data.data;
-        console.log(this.shopUserDetail);
+        // this.shop_pages = res.data.data.pages.shop_pages;
+        // console.log(this.shopUserDetail);
       })
       .catch((err) => {
         console.log(err);
@@ -434,7 +686,7 @@ export default {
       })
       .then((res) => {
         this.work_address = res.data.data;
-        console.log(this.work_address);
+        // console.log(this.work_address);
       })
       .catch((err) => {
         console.log(err);
@@ -453,7 +705,7 @@ export default {
       )
       .then((res) => {
         this.work_results = res.data.data;
-        console.log(this.work_results);
+        // console.log(this.work_results);
       })
       .catch((err) => {
         console.log(err);
@@ -473,7 +725,28 @@ export default {
       .then((res) => {
         // console.log(res);
         this.history_action = res.data.data;
-        console.log(this.history_action);
+        // console.log(this.history_action);
+        this.history_action.map((state) => {
+          this.arrayAllDate.push(state.time.slice(0, 10));
+        });
+        this.arrayDate.push(Array.from(new Set(this.arrayAllDate)));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // call api ds page
+    axios
+      .get("https://wh.ghtk.vn/api/v3/page/get-all-page-by-shop-code", {
+        headers: {
+          authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IiJ9.eyJ0b2tlbiI6IjNkZDU5ZWE5MDgyYWQ5ODYyYWVmYTczYTE0OTE2ZDJlN2JmN2YxYjdhZWRiMmNlZGQxMThkZDg5YzQ3ODg3MmQiLCJleHBpcmVkX2F0IjoiMjAyMS0wOC0xOVQwNTozNzozOC41MTA0MzBaIiwibW9fdGVsIjoiODQzNTYyNjIxMjEiLCJtb19yb2xlIjoiYWRtaW4iLCJtb191c2VybmFtZSI6ImhuY3A3QGdtYWlsLmNvbSJ9.M7U2RSNivrc0wFDhmXiOJgvhj2oH6AGNVNGxJ1OxDvA",
+        },
+      })
+      .then((res) => {
+        // console.log('page: ' + res)
+        this.list_pages = res.data.data.pages;
+        console.log(this.list_pages);
       })
       .catch((err) => {
         console.log(err);

@@ -6,9 +6,6 @@
   position: relative;
   width: 100%;
   height: 300px;
-  /* width: 100%;
-  margin-bottom: 20px;
-  display:; */
 }
 
 .top-back {
@@ -246,33 +243,30 @@ legend {
   background: #fff;
   left: 30px;
   top: -20px;
-  z-index: 10;
+  z-index: 9;
   height: 40px;
   width: 167px;
   text-align: center;
 }
-
-.fillterBox {
-  width: 96%;
-}
-
-.fillterBox button {
-  background-color: #efefef;
-  border-radius: 20px;
-  width: 89px;
-  height: 31px;
-  color: #28a745;
-  margin: 30px auto;
-  padding: auto;
+.filter{
   left: 2%;
-  top: 10px;
-  margin-right: 1%;
+    padding-top: 2%;
 }
-
-.middle-filterBox {
-  padding-top: 10px;
+.filter-btn {
+  margin-right: 15px;
+  padding: 4px 20px;
+  margin-bottom: 10px;
+  border-radius: 18px;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  color: #069255;
+  background-color: #efefef;
 }
-
+.filter .active {
+  background-color: #069255;
+  color: white;
+}
 input {
   margin: 5px;
 }
@@ -303,15 +297,6 @@ input {
   position: absolute;
 
 }
-
-/* .customcheckbox-checkmark {
-  height: 24px;
-  width: 24px;
-  border: 1px solid rgba(6, 146, 85, .58);
-  border-radius: 5px;
-  background-color: rgba(6, 146, 85, .58);
-} */
-
 .customcheckbox-span {
   left: 4%;
 }
@@ -346,6 +331,9 @@ input {
 
 .working-time-title {
   font-weight: 500;
+}
+.workingTimeDay__item{
+  color: #bdbdbd;
 }
 .page {
   left: 4%;
@@ -441,10 +429,41 @@ input {
   font-weight: 500;
   margin-bottom: 15px;
 }
+
 .activity{
   display: flex;
 }
 .activity-time{
   width: 30%;
 }
+.isactive{
+  background-color: #06925594;
+  color: #fff;
+}
 
+/* @media only screen and (min-width:600px){
+ .staffdetail-top{
+   width: 100% !important;
+ }
+ .top-infor{
+  left: 40% !important;
+ }
+ .top-action{
+  right: 0px !important;
+}
+.filter{
+  padding-top:28px;
+}
+.bottom-main{
+  display: block;
+}
+.bottom-left{
+  width: 100%;
+  margin-top:5%;
+
+}
+.bottom-right{
+  width:100%;
+  margin-top:5%;
+}
+} */
