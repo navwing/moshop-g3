@@ -132,10 +132,6 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
-    // axios
-    //   .post("http://x.ghtk.vn/api/v2/staff/create", {
-        
-    //   })
   },
 };
 </script>

@@ -4,6 +4,7 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {
     faAngleDown,
+    faAngleUp,
     faChartSimple,
     faUserGroup,
     faComment,
@@ -30,7 +31,7 @@ import './assets/main.css'
 import FloatingVue from 'floating-vue'
 import {Toaster} from "@meforma/vue-toaster";
 
-library.add(faAngleDown, faChartSimple, faUserGroup, faComment, faVideo, faUsers, faClipboardList,
+library.add(faAngleDown,faAngleUp, faChartSimple, faUserGroup, faComment, faVideo, faUsers, faClipboardList,
     faArrowUpFromBracket, faCheck, faUserPlus, faUser, faBox, faCircleInfo, faTag, faArrowRightFromBracket, faGear, faPlus
     , faArrowDown, faArrowUp,  faUserSecret, faChevronLeft,faAngleLeft, faEye, faClock, faXmark,faClock)
 
